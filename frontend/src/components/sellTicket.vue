@@ -6,8 +6,18 @@
 				<label for="user">Nom d'utilisateur</label>
 			</span>
 			<span class="p-float-label">
-				<Password v-model="password" inputId="password" :feedback="false" />
-				<label for="password">Mot de passe</label>
+				<InputNumber
+					v-model="price"
+					inputId="stacked-buttons"
+					showButtons
+					mode="currency"
+					currency="USD"
+					:pt="{
+						incrementButton: { class: 'bg-blue-500 border-blue-500' },
+						decrementButton: { class: 'bg-red-500 border-red-500' },
+					}"
+				/>
+				<label for="stacked-buttons">Prix</label>
 			</span>
 
 			<Divider />
@@ -22,6 +32,8 @@
 	import { useToast } from "primevue/usetoast"
 
 	const toast = useToast()
+
+	const price = ref(10)
 
 	const sell = () => {}
 </script>

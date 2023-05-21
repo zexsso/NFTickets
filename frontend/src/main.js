@@ -21,6 +21,7 @@ import DataView from 'primevue/dataview'
 import Tag from 'primevue/tag'
 import Dropdown from 'primevue/dropdown'
 import ScrollPanel from 'primevue/scrollpanel'
+import InputNumber from 'primevue/inputnumber'
 
 // Tailwind CSS
 import "./style/tailwind.css"
@@ -43,5 +44,6 @@ app.component("DataView", DataView)
 app.component("Tag", Tag)
 app.component("Dropdown", Dropdown)
 app.component("ScrollPanel", ScrollPanel)
+app.component("InputNumber", InputNumber)
 
 app.mount("#app")
