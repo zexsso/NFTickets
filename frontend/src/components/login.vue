@@ -6,7 +6,7 @@
 				<label for="user">Nom d'utilisateur</label>
 			</span>
 			<span class="p-float-label">
-				<Password v-model="password" inputId="password" />
+				<Password v-model="password" inputId="password" :feedback="false" />
 				<label for="password">Mot de passe</label>
 			</span>
 
