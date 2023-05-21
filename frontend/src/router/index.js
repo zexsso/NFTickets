@@ -8,6 +8,26 @@ const router = createRouter({
 			name: "home",
 			component: () => import("../views/HomeView.vue"),
 		},
+		{
+			path: "/explore",
+			name: "Explore",
+			component: () => import("../views/ExploreView.vue"),
+		},
+		{
+			path: "/marketplace",
+			name: "MarketplacePage",
+			component: () => import("../views/MarketplaceView.vue"),
+		},
+		{
+			path: "/create-event",
+			name: "CreateEventPage",
+			component: () => import("../views/CreateEventView.vue"),
+		},
+		{
+			path: "/account",
+			name: "AccountPage",
+			component: () => import("../views/AccountView.vue"),
+		}
 	],
 })
 
