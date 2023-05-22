@@ -2,16 +2,16 @@ const Web3 = require("web3")
 const EsaipTickets = require("../blockchain/build/contracts/EsaipTickets.json")
 
 // Créez une instance de Web3 en se connectant à votre réseau Ganache local
-const web3 = new Web3("http://localhost:7545") // Remplacez l'URL par celle de votre réseau Ganache
+const web3 = new Web3("http://127.0.0.1:7545") // Remplacez l'URL par celle de votre réseau Ganache
 
 // Récupérez les informations nécessaires pour interagir avec votre contrat déployé
-const contractAddress = "0x7f00E873096831037932932b9E5932572B7e28D1" // Remplacez par l'adresse de votre contrat déployé
+const contractAddress = "0xae97e3e339b885ee28593CCd28c6309614F42B24" // Remplacez par l'adresse de votre contrat déployé
 
 // Chargez le contrat en utilisant l'adresse du contrat et son ABI
 const contract = new web3.eth.Contract(EsaipTickets.abi, contractAddress)
 
 const concertId = 123 // ID du concert
-const addressToMint = "0x8DF9559a041E24d78727999B024604dfd3eCAe69" // Adresse à laquelle le ticket sera attribué (remplacez par l'adresse souhaitée)
+const addressToMint = "0x5784682bE80458d99940Fda810804D52a83b5133" // Adresse à laquelle le ticket sera attribué (remplacez par l'adresse souhaitée)
 
 // Appel de la fonction safeMint pour créer un ticket
 // contract.methods
@@ -26,15 +26,15 @@ const addressToMint = "0x8DF9559a041E24d78727999B024604dfd3eCAe69" // Adresse à
 // 		// Gérez l'erreur
 // 	})
 
-contract.methods
-	.balanceOf(addressToMint)
-	.call()
-	.then((balance) => {
-		console.log("Balance of owner:", balance)
-	})
-	.catch((error) => {
-		console.error("Error retrieving balance:", error)
-	})
+// contract.methods
+// 	.balanceOf(addressToMint)
+// 	.call()
+// 	.then((balance) => {
+// 		console.log("Balance of owner:", balance)
+// 	})
+// 	.catch((error) => {
+// 		console.error("Error retrieving balance:", error)
+// 	})
 
 // // Retrieve the tokenId of the token owned by the ownerAddress
 // contract.methods
@@ -58,8 +58,8 @@ contract.methods
 		console.error("Error retrieving owner:", error)
 	})
 
-const fromAddress = addressToMint // Adresse du propriétaire actuel du token
-const toAddress = "0xe1e7aCc1601f32006fBF9ddDeB0d8bb58E63400b" // Adresse à laquelle le token sera transféré
+// const fromAddress = addressToMint // Adresse du propriétaire actuel du token
+// const toAddress = "0x433A0CC99eF7DD505e611E9940A3c4fbC18d741F" // Adresse à laquelle le token sera transféré
 
 // contract.methods
 // 	.safeTransferFrom(fromAddress, toAddress, tokenId)

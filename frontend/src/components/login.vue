@@ -10,7 +10,7 @@
 				<label for="password">Mot de passe</label>
 			</span>
 
-            <Divider />
+			<Divider />
 
 			<Button label="Connexion" type="submit" icon="pi pi-user-plus" class="mt-4 text-white bg-indigo-600 hover:bg-indigo-700 border border-transparent" />
 		</form>
@@ -20,7 +20,9 @@
 <script setup>
 	import { ref } from "vue"
 	import { useToast } from "primevue/usetoast"
+	import { useRouter } from "vue-router"
 
+	const router = useRouter()
 	const toast = useToast()
 
 	const user = ref(null)
