@@ -9,7 +9,7 @@
 		</div>
 	</div>
 
-	<Dialog header="Vente" v-model:visible="visibleSell" :modal="true" :style="{ width: '20vw' }">
+	<Dialog header="Vente" v-model:visible="visibleSell" :modal="true" :style="{ width: '30vw' }">
 		<SellTicketVue />
 	</Dialog>
 </template>

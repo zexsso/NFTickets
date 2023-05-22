@@ -22,7 +22,7 @@
 		</div>
 	</div>
 
-	<Dialog header="Inscription" v-model:visible="visibleRegister" :modal="true" :style="{ width: '35vw' }">
+	<Dialog header="Inscription" v-model:visible="visibleRegister" :modal="true" :style="{ width: '25vw' }">
 		<RegisterVue />
 	</Dialog>
 

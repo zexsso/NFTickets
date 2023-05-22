@@ -22,6 +22,7 @@ import Tag from 'primevue/tag'
 import Dropdown from 'primevue/dropdown'
 import ScrollPanel from 'primevue/scrollpanel'
 import InputNumber from 'primevue/inputnumber'
+import InputSwitch from 'primevue/inputswitch';
 
 // Tailwind CSS
 import "./style/tailwind.css"
@@ -46,5 +47,6 @@ app.component("Tag", Tag)
 app.component("Dropdown", Dropdown)
 app.component("ScrollPanel", ScrollPanel)
 app.component("InputNumber", InputNumber)
+app.component("InputSwitch", InputSwitch)
 
 app.mount("#app")

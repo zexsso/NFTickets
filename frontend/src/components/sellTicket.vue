@@ -2,8 +2,8 @@
 	<div class="flex justify-center mt-12">
 		<form @submit.prevent="sell" class="flex flex-col px-4 space-y-8">
 			<span class="p-float-label">
-				<InputText v-model="user" inputId="user" />
-				<label for="user">Nom d'utilisateur</label>
+				<Dropdown v-model="selectedTicket" :options="Tickets" optionLabel="name" class="w-full md:w-14rem" />
+				<label for="user">Ticket à vendre</label>
 			</span>
 			<span class="p-float-label">
 				<InputNumber
@@ -30,10 +30,14 @@
 <script setup>
 	import { ref } from "vue"
 	import { useToast } from "primevue/usetoast"
+	import { ProductService } from "../../TestData/dataTicket"
 
 	const toast = useToast()
 
 	const price = ref(10)
+
+	const selectedTicket = ref()
+	const Tickets = ref(ProductService.getProductsData())
 
 	const sell = () => {}
 </script>

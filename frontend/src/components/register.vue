@@ -1,38 +1,24 @@
 <template lang="">
 	<div class="flex flex-row justify-center mt-12">
-		<form @submit.prevent="registerU" class="flex flex-col px-4 space-y-8">
-			<h3 class="text-xl font-bold">Utilisateur</h3>
+		<form @submit.prevent="register" class="flex flex-col px-4 space-y-8">
 			<span class="p-float-label">
-				<InputText v-model="userU" inputId="userU" />
-				<label for="userU">Nom d'utilisateur</label>
+				<InputText v-model="user" inputId="user" />
+				<label for="user">Nom d'utilisateur</label>
 			</span>
 			<span class="p-float-label">
-				<Password v-model="passwordU" inputId="passwordU" />
-				<label for="passwordU">Mot de passe</label>
+				<Password v-model="password" inputId="password" />
+				<label for="password">Mot de passe</label>
 			</span>
+
+			<div class="flex space-x-2">
+				<InputSwitch v-model="crea" />
+				<p>Createur d'événement</p>
+			</div>
 
 			<Divider />
 
 			<Button label="Inscription" type="submit" icon="pi pi-user-plus" class="mt-4 text-white bg-indigo-600 hover:bg-indigo-700 border border-transparent" />
 		</form>
-
-		<Divider layout="vertical"><b>OU</b></Divider>
-
-		<from @submit.prevent="registerC" class="flex flex-col px-4 space-y-8">
-			<h3 class="text-xl font-bold">Créateur d'événements</h3>
-			<span class="p-float-label">
-				<InputText v-model="userC" inputId="userC" />
-				<label for="userC">Nom d'utilisateur</label>
-			</span>
-			<span class="p-float-label">
-				<Password v-model="passwordC" inputId="passwordC" />
-				<label for="passwordC">Mot de passe</label>
-			</span>
-
-			<Divider />
-
-			<Button label="Inscription" type="submit" icon="pi pi-calendar-plus" class="mt-4 text-white bg-indigo-600 hover:bg-indigo-700 border border-transparent" />
-		</from>
 	</div>
 </template>
 
@@ -42,13 +28,11 @@
 
 	const toast = useToast()
 
-	const userU = ref(null)
-	const passwordU = ref(null)
+	const user = ref(null)
+	const password = ref(null)
+	const crea = ref(false)
 
-	const userC = ref(null)
-	const passwordC = ref(null)
-
-	const registerU = () => {
+	const register = () => {
 		fetch("http://localhost:3000/auth/register", {
 			method: "POST",
 			credentials: "include",
@@ -56,8 +40,9 @@
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
-				username: userU.value,
-				password: passwordU.value,
+				username: user.value,
+				password: password.value,
+				crea: crea.value,
 			}),
 		})
 			.then((response) => {
