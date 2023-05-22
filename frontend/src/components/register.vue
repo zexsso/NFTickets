@@ -11,8 +11,8 @@
 				<label for="passwordU">Mot de passe</label>
 			</span>
 
-            <Divider />
-            
+			<Divider />
+
 			<Button label="Inscription" type="submit" icon="pi pi-user-plus" class="mt-4 text-white bg-indigo-600 hover:bg-indigo-700 border border-transparent" />
 		</form>
 
@@ -29,7 +29,7 @@
 				<label for="passwordC">Mot de passe</label>
 			</span>
 
-            <Divider />
+			<Divider />
 
 			<Button label="Inscription" type="submit" icon="pi pi-calendar-plus" class="mt-4 text-white bg-indigo-600 hover:bg-indigo-700 border border-transparent" />
 		</from>
@@ -49,21 +49,17 @@
 	const passwordC = ref(null)
 
 	const registerU = () => {
-		fetch(
-			"http://localhost:3000/auth/register",
-			{ mode: "no-cors" },
-			{
-				method: "POST",
-				credentials: "include",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					username: userU.value,
-					password: passwordU.value,
-				}),
-			}
-		)
+		fetch("http://localhost:3000/auth/register", {
+			method: "POST",
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				username: userU.value,
+				password: passwordU.value,
+			}),
+		})
 			.then((response) => {
 				if (!response.ok) {
 					throw new Error("Network response was not ok")
