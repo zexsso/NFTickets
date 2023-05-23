@@ -28,8 +28,8 @@ router.post("/create", upload.single("image"), async (req, res) => {
 		const { name, date, address, place, city, country, price, tickets: ticketCount } = req.body
 		const tickets = {}
 		const image = req.file.path
-
-		const event = new Event({ name, date, address, place, city, country, price, tickets, image })
+		const total_tickets = ticketCount
+		const event = new Event({ name, date, address, place, city, country, price, tickets, total_tickets, image })
 		const savedEvent = await event.save()
 
 		for (let i = 0; i < ticketCount; i++) {

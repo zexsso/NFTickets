@@ -1,5 +1,4 @@
 <template lang="">
-	<button @click="getcl()">test</button>
 	<ScrollPanel style="width: 100%; height: 93vh">
 		<DataView :value="products" :layout="'grid'" :sortOrder="sortOrder" :sortField="sortField">
 			<template #header>
@@ -15,13 +14,13 @@
 						<div class="p-3 border-1 surface-border surface-card rounded-xl">
 							<div class="flex flex-wrap align-items-center justify-content-between gap-2">
 								<div class="flex align-items-center gap-2">
-									<i class="pi pi-tag"></i>
+									<i class="pi pi-clock"></i>
 									<span class="font-semibold">{{ slotProps.data.date }}</span>
 								</div>
-								<Tag class="h-8 w-2 text-sm" :value="slotProps.data.tickets" :severity="getSeverity(slotProps.data)"></Tag>
+								<Tag class="h-8 w-2 text-sm" :value="slotProps.data.total_tickets" :severity="getSeverity(slotProps.data)"></Tag>
 							</div>
 							<div class="flex flex-column align-items-center gap-3 py-5">
-								<img class="w-9 shadow-2 border-round" :src="`https://primefaces.org/cdn/primevue/images/product/${slotProps.data.image}`" />
+								<img class="w-9 shadow-2 border-round" :src="`http://localhost:3000/${slotProps.data.image.replace(/\\/g, '/')}`" />
 								<div class="text-2xl font-bold">{{ slotProps.data.name }}</div>
 								<div class="text-xl font-bold">{{ slotProps.data.city }}</div>
 							</div>
@@ -39,12 +38,12 @@
 	<Dialog header="Description" v-model:visible="visibleDescript" :modal="true" :style="{ width: '35vw' }">
 		<div class="p-6">
 			<h2 class="text-xl font-bold mb-4">{{ selectedObject.name }}</h2>
-			<img :src="`https://primefaces.org/cdn/primevue/images/product/${selectedObject.image}`" class="w-full h-64 object-cover mb-4" />
+			<img :src="`http://localhost:3000/${selectedObject.image.replace(/\\/g, '/')}`" class="w-full h-64 object-cover mb-4" />
 			<p class="mb-4"><strong>Date :</strong> {{ selectedObject.date }}</p>
 			<p class="mb-4"><strong>Address :</strong> {{ selectedObject.address }}</p>
 			<p class="mb-4"><strong>City :</strong> {{ selectedObject.city }}</p>
 			<p class="mb-4"><strong>Country :</strong> {{ selectedObject.country }}</p>
-			<p class="mb-4"><strong>Tickets Available :</strong> {{ selectedObject.tickets }}</p>
+			<p class="mb-4"><strong>Tickets Available :</strong> {{ selectedObject.total_tickets }}</p>
 			<p class="mb-4 text-green-500 font-bold"><strong class="text-white font-normal">Price :</strong> {{ selectedObject.price }} $</p>
 			<div class="flex space-x-2">
 				<Button @click="buyTicket(selectedObject)" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" :disabled="selectedObject.tickets === 0"
@@ -61,7 +60,7 @@
 <script setup>
 	import { ref, onMounted, onBeforeMount } from "vue"
 	import { ProductService } from "../../TestData/dataEvent"
-	
+
 	const products = ref()
 
 	const sortKey = ref()
@@ -72,8 +71,19 @@
 		{ label: "Tickets Low to High", value: "tickets" },
 	])
 
-	onBeforeMount(() => {
-		ProductService.getProducts().then((data) => (products.value = data.slice()))
+	onBeforeMount(async () => {
+		try {
+			const response = await fetch("http://localhost:3000/events/") // Make a GET request to the API endpoint
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`)
+			}
+			const data = await response.json() // Parse the JSON data from the response
+
+			// Assign the data to the products value
+			products.value = data.events.slice()
+		} catch (error) {
+			console.error("Fetch failed: ", error)
+		}
 	})
 
 	const selectedObject = ref(null)
@@ -113,9 +123,5 @@
 		} else {
 			return null
 		}
-	}
-
-	const getcl = () => {
-		console.log(products.value)
 	}
 </script>

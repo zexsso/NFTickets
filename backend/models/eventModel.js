@@ -13,6 +13,7 @@ const eventSchema = new mongoose.Schema({
         of: [String],
         required: true
     },
+    total_tickets: { type: Number, required: true },
     image: String,
 });
 
