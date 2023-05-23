@@ -15,7 +15,7 @@
 								<div class="text-xl font-bold">{{ slotProps.data.name }}</div>
 							</div>
 							<div class="flex align-items-center justify-content-between">
-								<span class="text-lg font-bold text-green-500">$ {{ slotProps.data.price }}</span>
+								<span class="text-lg font-bold text-green-500">{{ slotProps.data.price }} $</span>
 							</div>
 						</div>
 					</Button>
