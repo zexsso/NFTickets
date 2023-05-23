@@ -122,6 +122,5 @@
 	}
 	const img_upload = (event) => {
 		the_event.value.image = event.files[0]
-		toast.add({ severity: "info", summary: "Success", detail: "File Uploaded", life: 3000 })
 	}
 </script>

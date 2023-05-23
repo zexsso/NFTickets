@@ -1,4 +1,5 @@
 <template lang="">
+	<button @click="getcl()">test</button>
 	<ScrollPanel style="width: 100%; height: 93vh">
 		<DataView :value="products" :layout="'grid'" :sortOrder="sortOrder" :sortField="sortField">
 			<template #header>
@@ -56,10 +57,20 @@
 </template>
 
 <script setup>
-	import { ref, onMounted } from "vue"
+	import { ref, onMounted, onBeforeMount } from "vue"
 	import { ProductService } from "../../TestData/dataEvent"
+	
+	const products = ref()
 
-	onMounted(() => {
+	const sortKey = ref()
+	const sortOrder = ref()
+	const sortField = ref()
+	const sortOptions = ref([
+		{ label: "Tickets High to Low", value: "!tickets" },
+		{ label: "Tickets Low to High", value: "tickets" },
+	])
+
+	onBeforeMount(() => {
 		ProductService.getProducts().then((data) => (products.value = data.slice()))
 	})
 
@@ -75,15 +86,6 @@
 		// process the ticket buying here
 	}
 
-	const products = ref()
-
-	const sortKey = ref()
-	const sortOrder = ref()
-	const sortField = ref()
-	const sortOptions = ref([
-		{ label: "Tickets High to Low", value: "!tickets" },
-		{ label: "Tickets Low to High", value: "tickets" },
-	])
 	const onSortChange = (event) => {
 		const value = event.value.value
 		const sortValue = event.value
@@ -109,5 +111,9 @@
 		} else {
 			return null
 		}
+	}
+
+	const getcl = () => {
+		console.log(products.value)
 	}
 </script>

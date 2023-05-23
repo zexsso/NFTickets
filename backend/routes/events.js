@@ -143,4 +143,18 @@ router.get("/:id", async (req, res) => {
 	}
 })
 
+router.get("/", async (req, res) => {
+	try {
+		const events = await Event.find()
+		if (events.length === 0) {
+			res.status(404).json({ message: "No events found", success: false })
+			return
+		}
+		res.status(200).json({ events: events, success: true })
+	} catch (err) {
+		console.error(err)
+		res.status(500).json({ message: "Server error while fetching events", success: false })
+	}
+})
+
 module.exports = router
