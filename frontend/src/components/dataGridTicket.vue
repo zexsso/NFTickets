@@ -1,13 +1,12 @@
 <template lang="">
 	<ScrollPanel style="width: 100%; height: 93vh">
 		<DataView :value="products" :layout="'grid'">
-			<template #header>
-				</template>
+			<template #header> </template>
 
 			<template #grid="slotProps">
 				<div class="col-12 sm:col-6 xl:col-2 p-4">
 					<Button
-						@click="buyTicket(slotProps.data)"
+						@click="confirmBuy($event, slotProps.data)"
 						class="transition ease-in-out delay-150 bg-none hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 text-white border-none rounded-md"
 					>
 						<div class="p-2 border-1 surface-border surface-card rounded-xl">
@@ -16,7 +15,7 @@
 								<div class="text-xl font-bold">{{ slotProps.data.name }}</div>
 							</div>
 							<div class="flex align-items-center justify-content-between">
-								<span class="text-sm font-semibold">$ {{ slotProps.data.price }}</span>
+								<span class="text-lg font-bold text-green-500">$ {{ slotProps.data.price }}</span>
 							</div>
 						</div>
 					</Button>
@@ -25,20 +24,40 @@
 		</DataView>
 	</ScrollPanel>
 
+	<ConfirmPopup></ConfirmPopup>
 </template>
 
 <script setup>
 	import { ref, onMounted } from "vue"
+	import { useConfirm } from "primevue/useconfirm"
+	import { useToast } from "primevue/usetoast"
+
 	import { ProductService } from "../../TestData/dataTicket"
 
 	onMounted(() => {
 		ProductService.getProducts().then((data) => (products.value = data.slice()))
 	})
 
-	function buyTicket(data) {
-		// process the ticket buying here
+	const products = ref()
+	const confirm = useConfirm()
+	const toast = useToast()
+
+	const confirmBuy = (event, data) => {
+		confirm.require({
+			target: event.currentTarget,
+			message: "Are you sure you want to buy this ticket ?",
+			icon: "pi pi-exclamation-triangle",
+			accept: () => {
+				buyTicket(data)
+			},
+			reject: () => {
+				toast.add({ severity: "error", summary: "Rejected", detail: "You have rejected", life: 3000 })
+			},
+		})
 	}
 
-	const products = ref()
-
+	function buyTicket(data) {
+		toast.add({ severity: "info", summary: "Confirmed", detail: "You have accepted", life: 3000 })
+		// process the ticket buying here
+	}
 </script>

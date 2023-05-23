@@ -26,6 +26,7 @@
 								<div class="text-xl font-bold">{{ slotProps.data.city }}</div>
 							</div>
 							<div class="flex align-items-center justify-content-between">
+								<span class="text-lg font-bold text-green-500">$ {{ slotProps.data.price }}</span>
 								<span class="text-sm font-semibold">{{ slotProps.data.address }}</span>
 							</div>
 						</div>
@@ -39,11 +40,12 @@
 		<div class="p-6">
 			<h2 class="text-xl font-bold mb-4">{{ selectedObject.name }}</h2>
 			<img :src="`https://primefaces.org/cdn/primevue/images/product/${selectedObject.image}`" class="w-full h-64 object-cover mb-4" />
-			<p class="mb-4"><strong>Date:</strong> {{ selectedObject.date }}</p>
-			<p class="mb-4"><strong>Address:</strong> {{ selectedObject.address }}</p>
-			<p class="mb-4"><strong>City:</strong> {{ selectedObject.city }}</p>
-			<p class="mb-4"><strong>Country:</strong> {{ selectedObject.country }}</p>
-			<p class="mb-4"><strong>Tickets Available:</strong> {{ selectedObject.tickets }}</p>
+			<p class="mb-4"><strong>Date :</strong> {{ selectedObject.date }}</p>
+			<p class="mb-4"><strong>Address :</strong> {{ selectedObject.address }}</p>
+			<p class="mb-4"><strong>City :</strong> {{ selectedObject.city }}</p>
+			<p class="mb-4"><strong>Country :</strong> {{ selectedObject.country }}</p>
+			<p class="mb-4"><strong>Tickets Available :</strong> {{ selectedObject.tickets }}</p>
+			<p class="mb-4 text-green-500 font-bold"><strong class="text-white font-normal">Price :</strong> {{ selectedObject.price }} $</p>
 			<div class="flex space-x-2">
 				<Button @click="buyTicket(selectedObject)" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" :disabled="selectedObject.tickets === 0"
 					>Buy Ticket</Button
