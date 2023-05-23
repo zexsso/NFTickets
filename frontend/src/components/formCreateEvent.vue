@@ -1,5 +1,5 @@
 <template lang="">
-	<Card class="border border-zinc-700 rounded-xl" style="width: 40em">
+	<Card class="border border-zinc-700 rounded-xl" style="width: 50em">
 		<template #title>Create event</template>
 		<template #content>
 			<form @submit.prevent="submitForm" class="flex flex-col justify-center px-4 space-y-10 mt-4">
@@ -14,6 +14,7 @@
 							inputId="date"
 							dateFormat="yy-mm-dd"
 							:showIcon="true"
+                            showTime
 							:pt="{
 								dropdownButton: {
 									root: { class: 'bg-indigo-600 border-indigo-600 text-white' },
