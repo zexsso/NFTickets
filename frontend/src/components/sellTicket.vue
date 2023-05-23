@@ -3,7 +3,7 @@
 		<form @submit.prevent="sell" class="flex flex-col px-4 space-y-8">
 			<span class="p-float-label">
 				<Dropdown v-model="selectedTicket" :options="Tickets" optionLabel="name" class="w-full md:w-14rem" />
-				<label for="user">Ticket à vendre</label>
+				<label for="user">Choose a ticket</label>
 			</span>
 			<span class="p-float-label">
 				<InputNumber
@@ -17,12 +17,12 @@
 						decrementButton: { class: 'bg-red-500 border-red-500' },
 					}"
 				/>
-				<label for="stacked-buttons">Prix</label>
+				<label for="stacked-buttons">Price</label>
 			</span>
 
 			<Divider />
 
-			<Button label="Vendre" type="submit" icon="pi pi-user-plus" class="mt-4 text-white bg-indigo-600 hover:bg-indigo-700 border border-transparent" />
+			<Button label="Sell" type="submit" icon="pi pi-user-plus" class="mt-4 text-white bg-indigo-600 hover:bg-indigo-700 border border-transparent" />
 		</form>
 	</div>
 </template>

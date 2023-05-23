@@ -1,5 +1,5 @@
 <template lang="">
-	<ScrollPanel style="width: 100%; height: 93vh">
+	<ScrollPanel style="width: 100%; height: 81vh">
 		<DataView :value="products" :layout="'grid'">
 			<template #header>
 				</template>
@@ -34,10 +34,6 @@
 	onMounted(() => {
 		ProductService.getProducts().then((data) => (products.value = data.slice()))
 	})
-
-	function buyTicket(data) {
-		// process the ticket buying here
-	}
 
 	const products = ref()
 

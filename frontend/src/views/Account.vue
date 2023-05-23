@@ -3,8 +3,10 @@
 		<div>
 			<NavbarVue />
 		</div>
-		<div class="flex items-center justify-center h-full">
-			<FormCreateEventVue />
+		<div class="flex flex-col h-full space-y-8">
+			<div class="text-5xl font-extrabold justify-center mt-10 ml-10">
+				<span class="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500"> Account </span>
+			</div>
 		</div>
 	</div>
 </template>
@@ -13,5 +15,4 @@
 	import { ref } from "vue"
 
 	import NavbarVue from "../components/navbar.vue"
-	import FormCreateEventVue from "../components/formCreateEvent.vue"
 </script>

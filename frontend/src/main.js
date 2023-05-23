@@ -22,7 +22,12 @@ import Tag from 'primevue/tag'
 import Dropdown from 'primevue/dropdown'
 import ScrollPanel from 'primevue/scrollpanel'
 import InputNumber from 'primevue/inputnumber'
-import InputSwitch from 'primevue/inputswitch';
+import InputSwitch from 'primevue/inputswitch'
+import Card from 'primevue/card'
+import Calendar from 'primevue/calendar'
+import FileUpload from 'primevue/fileupload'
+import Menu from 'primevue/menu'
+import Avatar from 'primevue/avatar'
 
 // Tailwind CSS
 import "./style/tailwind.css"
@@ -48,5 +53,10 @@ app.component("Dropdown", Dropdown)
 app.component("ScrollPanel", ScrollPanel)
 app.component("InputNumber", InputNumber)
 app.component("InputSwitch", InputSwitch)
+app.component("Card", Card)
+app.component("Calendar", Calendar)
+app.component("FileUpload", FileUpload)
+app.component("Menu", Menu)
+app.component("Avatar", Avatar)
 
 app.mount("#app")

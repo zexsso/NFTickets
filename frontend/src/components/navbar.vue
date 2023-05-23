@@ -4,15 +4,20 @@
 			<div class="flex items-center justify-between">
 				<div>
 					<router-link to="/explore">
-						<img class="h-16 w-auto" src="../../public/NFT-Ticket.png" alt="Logo" />
+						<img class="h-14 w-auto" src="../../public/NFT-Ticket.png" alt="Logo" />
 					</router-link>
 				</div>
 
 				<div class="flex items-center">
-					<router-link to="/explore" class="mx-3 text-gray-500 font-bold hover:text-gray-200">Explore</router-link>
-					<router-link to="/marketplace" class="mx-3 text-gray-500 font-bold hover:text-gray-200">Marketplace</router-link>
-					<router-link to="/create-event" class="mx-3 text-gray-500 font-bold hover:text-gray-200">Create Event</router-link>
-					<router-link to="/account" class="mx-3 text-gray-500 font-bold hover:text-gray-200">Account</router-link>
+					<div>
+						<router-link to="/explore" class="mx-3 text-gray-500 font-bold hover:text-gray-200">Explore</router-link>
+						<router-link to="/marketplace" class="mx-3 text-gray-500 font-bold hover:text-gray-200">Marketplace</router-link>
+						<router-link to="/create-event" class="mx-3 text-gray-500 font-bold hover:text-gray-200">Create Event</router-link>
+						<router-link to="/MyTickets" class="mx-3 text-gray-500 font-bold hover:text-gray-200">My tickets</router-link>
+					</div>
+					<div class="ml-6">
+						<AvatarVue />
+					</div>
 				</div>
 			</div>
 		</div>
@@ -21,6 +26,7 @@
 
 <script setup>
 	import { ref } from "vue"
+	import AvatarVue from "./Avatar.vue"
 </script>
 
 <style scoped>
