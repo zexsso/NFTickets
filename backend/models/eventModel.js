@@ -7,6 +7,7 @@ const eventSchema = new mongoose.Schema({
     place: String,
     city: String,
     country: String,
+    price: Number,
     tickets: {
         type: Map,
         of: [String]
