@@ -38,7 +38,7 @@ const addressToMint = "0x5784682bE80458d99940Fda810804D52a83b5133" // Adresse à
 
 // // Retrieve the tokenId of the token owned by the ownerAddress
 // contract.methods
-// 	.tokenOfOwnerByIndex(addressToMint, 0)
+// 	.tokenOfOwnerByIndex(addressToMint, 9)
 // 	.call()
 // 	.then((tokenId) => {
 // 		console.log("Token ID:", tokenId)
@@ -47,16 +47,16 @@ const addressToMint = "0x5784682bE80458d99940Fda810804D52a83b5133" // Adresse à
 // 		console.error("Error retrieving the token ID:", error)
 // 	})
 
-const tokenId = 0 // ID du token
-contract.methods
-	.ownerOf(tokenId)
-	.call()
-	.then((owner) => {
-		console.log("Owner of token:", owner)
-	})
-	.catch((error) => {
-		console.error("Error retrieving owner:", error)
-	})
+// const tokenId = 0 // ID du token
+// contract.methods
+// 	.ownerOf(tokenId)
+// 	.call()
+// 	.then((owner) => {
+// 		console.log("Owner of token:", owner)
+// 	})
+// 	.catch((error) => {
+// 		console.error("Error retrieving owner:", error)
+// 	})
 
 // const fromAddress = addressToMint // Adresse du propriétaire actuel du token
 // const toAddress = "0x433A0CC99eF7DD505e611E9940A3c4fbC18d741F" // Adresse à laquelle le token sera transféré
@@ -72,3 +72,17 @@ contract.methods
 // 		console.error("Une erreur s'est produite lors du transfert du token :", error)
 // 		// Gérez l'erreur
 // 	})
+
+// Définissez l'ID du ticket
+const tokenId = 11
+
+// Appelez la méthode getTicketInfo
+contract.methods
+	.getTicketInfo(tokenId)
+	.call()
+	.then((concertId) => {
+		console.log("Concert ID:", concertId)
+	})
+	.catch((error) => {
+		console.error("An error occurred while fetching ticket info:", error)
+	})

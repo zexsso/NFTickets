@@ -1,6 +1,5 @@
 const express = require("express")
 const router = express.Router()
-const multer = require("multer")
 const Event = require("../models/eventModel")
 
 // Setup Web3 and contract
@@ -9,31 +8,15 @@ const EsaipTickets = require("../../blockchain/build/contracts/EsaipTickets.json
 const web3 = new Web3("http://127.0.0.1:7545")
 const contractAddress = "0xae97e3e339b885ee28593CCd28c6309614F42B24"
 const contract = new web3.eth.Contract(EsaipTickets.abi, contractAddress)
-const addressToMint = "0x5784682bE80458d99940Fda810804D52a83b5133"
+const addressToMint = "0x5784682bE80458d99940Fda810804D52a83b5133" // Address to which the tickets will be minted
 
-// Multer setup
-const storage = multer.diskStorage({
-	destination: function (req, file, cb) {
-		cb(null, "./uploads/events")
-	},
-	filename: function (req, file, cb) {
-		cb(null, Date.now() + "-" + file.originalname)
-	},
-})
-
-const upload = multer({ storage: storage })
-
-router.post("/create", upload.single("image"), async (req, res) => {
+router.post("/create", async (req, res) => {
 	try {
 		const { name, date, address, place, city, country, tickets: ticketCount } = req.body
 		const tickets = {}
-		const image = req.file.path
-
-		const event = new Event({ name, date, address, place, city, country, tickets, image })
-		const savedEvent = await event.save()
 
 		for (let i = 0; i < ticketCount; i++) {
-			const concertId = savedEvent._id // Use the ID of the saved event as concertId
+			const concertId = 121 // Generate a unique ID for each ticket
 
 			const tokenId = await contract.methods
 				.safeMint(addressToMint, concertId)
@@ -53,9 +36,8 @@ router.post("/create", upload.single("image"), async (req, res) => {
 			tickets[addressToMint].push(String(tokenId))
 		}
 
-		// Update the event with the tickets
-		savedEvent.tickets = tickets
-		await savedEvent.save()
+		const event = new Event({ name, date, address, place, city, country, tickets })
+		const savedEvent = await event.save()
 
 		res.status(201).json({ message: "Event successfully created", success: true })
 	} catch (err) {
