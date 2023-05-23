@@ -1,30 +1,58 @@
 <template lang="">
-	<ScrollPanel style="width: 100%; height: 81vh">
+	<ScrollPanel style="width: 100%; height: 93vh">
 		<DataView :value="products" :layout="'grid'">
 			<template #header>
-				</template>
+				<div class="text-5xl font-extrabold ml-10">
+					<span class="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500"> My tickets </span>
+				</div>
+			</template>
 
 			<template #grid="slotProps">
 				<div class="col-12 sm:col-6 xl:col-2 p-4">
-					<Button
-						@click="buyTicket(slotProps.data)"
-						class="transition ease-in-out delay-150 bg-none hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 text-white border-none rounded-md"
+					<div
+						class="cursor-default transition ease-in-out delay-150 bg-none hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 text-white border-none rounded-md p-3"
 					>
-						<div class="p-2 border-1 surface-border surface-card rounded-xl">
+						<div class="transition ease-in-out delay-150 p-2 border-1 surface-border surface-card rounded-xl">
 							<div class="flex flex-column align-items-center gap-3 py-5">
 								<img class="w-9 shadow-2 border-round" :src="`https://primefaces.org/cdn/primevue/images/product/${slotProps.data.image}`" />
 								<div class="text-xl font-bold">{{ slotProps.data.name }}</div>
 							</div>
 							<div class="flex align-items-center justify-content-between">
 								<span class="text-sm font-semibold">$ {{ slotProps.data.price }}</span>
+								<Button @click="openSell(slotProps.data)" class="bg-indigo-500 hover:bg-indigo-700 text-white border-none p-3" icon="pi pi-shopping-cart" rounded />
 							</div>
 						</div>
-					</Button>
+					</div>
 				</div>
 			</template>
 		</DataView>
 	</ScrollPanel>
 
+	<Dialog header="Vente" v-model:visible="visibleSell" :modal="true" :style="{ width: '30vw' }">
+		<div class="flex justify-center mt-12">
+			<form @submit.prevent="sell" class="flex flex-col px-4 space-y-8">
+				<h2 class="text-xl font-bold mb-4">{{ selectedObject.name }}</h2>
+				<span class="p-float-label">
+					<InputNumber
+						v-model="price"
+						inputId="stacked-buttons"
+						showButtons
+						mode="currency"
+						currency="USD"
+						:pt="{
+							incrementButton: { class: 'bg-blue-500 border-blue-500' },
+							decrementButton: { class: 'bg-red-500 border-red-500' },
+						}"
+					/>
+					<label for="stacked-buttons">Price</label>
+				</span>
+
+				<Divider />
+
+				<Button label="Sell" type="submit" icon="pi pi-user-plus" class="mt-4 text-white bg-indigo-600 hover:bg-indigo-700 border border-transparent" />
+			</form>
+		</div>
+	</Dialog>
 </template>
 
 <script setup>
@@ -37,4 +65,15 @@
 
 	const products = ref()
 
+	const selectedObject = ref(null)
+	const visibleSell = ref(false)
+
+	const price = ref(10)
+
+	const sell = () => {}
+
+	function openSell(data) {
+		selectedObject.value = data
+		visibleSell.value = true
+	}
 </script>
