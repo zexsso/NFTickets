@@ -12,23 +12,25 @@ contract EsaipTickets is ERC721Enumerable, Ownable {
     Counters.Counter private _tokenIdCounter;
 
     struct Ticket {
-        uint256 concertId;
+        string concertId;
     }
 
     mapping(uint256 => Ticket) private _tickets;
 
     constructor() ERC721("EsaipTickets", "ETS") {}
 
-    function safeMint(address to, uint256 concertId) public onlyOwner {
+    function safeMint(address to, string memory concertId) public onlyOwner returns (uint256) {
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
         _safeMint(to, tokenId);
 
         Ticket storage ticket = _tickets[tokenId];
         ticket.concertId = concertId;
+
+        return tokenId;
     }
 
-    function getTicketInfo(uint256 tokenId) external view returns (uint256 concertId) {
+    function getTicketInfo(uint256 tokenId) external view returns (string memory concertId) {
         Ticket storage ticket = _tickets[tokenId];
         concertId = ticket.concertId;
     }
