@@ -44,12 +44,12 @@
 				</div>
 				<div class="flex justify-center space-x-10">
 					<span class="p-float-label">
-						<InputNumber v-model="the_event.tickets" mode="decimal" useGrouping="false" inputId="tickets" />
+						<InputNumber v-model="the_event.tickets" inputId="tickets" mode="decimal" showButtons :min="0" :max="500" />
 						<label for="tickets">Number of tickets</label>
 					</span>
 					<span class="p-float-label">
-						<InputNumber v-model="the_event.price" mode="decimal" useGrouping="false" inputId="price" />
-						<label for="price">Price of a ticket</label>
+						<InputNumber v-model="the_event.price" inputId="price" showButtons mode="currency" currency="EUR" />
+						<label for="tickets">Price of a ticket</label>
 					</span>
 					<FileUpload
 						mode="basic"
@@ -85,8 +85,8 @@
 		place: "",
 		city: "",
 		country: "",
-		tickets: 0,
-		price: 0,
+		tickets: 10,
+		price: 20,
 		image: null,
 	})
 
