@@ -2,7 +2,7 @@
 	<div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
 		<div class="max-w-md w-full space-y-8">
 			<div>
-				<img class="mx-auto h-30 w-auto" src="../../public/NFT-Ticket.png" alt="Logo" />
+				<img class="mx-auto h-30 w-auto" src="../../images/NFT-Ticket.png" alt="Logo" />
 				<h2 class="mt-6 text-center text-3xl font-extrabold text-gray-200">Bienvenue sur notre site</h2>
 			</div>
 			<div>

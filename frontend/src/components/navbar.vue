@@ -4,7 +4,7 @@
 			<div class="flex items-center justify-between">
 				<div>
 					<router-link to="/explore">
-						<img class="h-14 w-auto" src="../../public/NFT-Ticket.png" alt="Logo" />
+						<img class="h-14 w-auto" src="../../images/NFT-Ticket.png" alt="Logo" />
 					</router-link>
 				</div>
 
