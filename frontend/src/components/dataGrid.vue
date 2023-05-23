@@ -9,9 +9,9 @@
 				<div class="col-12 sm:col-6 xl:col-3 p-4">
 					<Button
 						@click="openDescription(slotProps.data)"
-						class="transition ease-in-out delay-150 bg-none hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 text-white border-none rounded-md"
+						class="w-11 justify-center transition ease-in-out delay-150 bg-none hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 text-white border-none rounded-md"
 					>
-						<div class="p-3 border-1 surface-border surface-card rounded-xl">
+						<div class="w-12 p-3 border-1 surface-border surface-card rounded-xl">
 							<div class="flex flex-wrap align-items-center justify-content-between gap-2">
 								<div class="flex align-items-center gap-2">
 									<i class="pi pi-clock"></i>
@@ -20,7 +20,7 @@
 								<Tag class="h-8 w-2 text-sm" :value="slotProps.data.total_tickets" :severity="getSeverity(slotProps.data)"></Tag>
 							</div>
 							<div class="flex flex-column align-items-center gap-3 py-5">
-								<img class="w-9 shadow-2 border-round" :src="`http://localhost:3000/${slotProps.data.image.replace(/\\/g, '/')}`" />
+								<img class="w-11 h-72 shadow-2 border-round" :src="`http://localhost:3000/${slotProps.data.image.replace(/\\/g, '/')}`" />
 								<div class="text-2xl font-bold">{{ slotProps.data.name }}</div>
 								<div class="text-xl font-bold">{{ slotProps.data.city }}</div>
 							</div>
@@ -38,7 +38,9 @@
 	<Dialog header="Description" v-model:visible="visibleDescript" :modal="true" :style="{ width: '35vw' }">
 		<div class="p-6">
 			<h2 class="text-xl font-bold mb-4">{{ selectedObject.name }}</h2>
-			<img :src="`http://localhost:3000/${selectedObject.image.replace(/\\/g, '/')}`" class="w-full h-64 object-cover mb-4" />
+			<div class="flex justify-center">
+				<img :src="`http://localhost:3000/${selectedObject.image.replace(/\\/g, '/')}`" class="w-full h-56 object-cover mb-4" />
+			</div>
 			<p class="mb-4"><strong>Date :</strong> {{ selectedObject.date }}</p>
 			<p class="mb-4"><strong>Address :</strong> {{ selectedObject.address }}</p>
 			<p class="mb-4"><strong>City :</strong> {{ selectedObject.city }}</p>

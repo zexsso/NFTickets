@@ -7,9 +7,9 @@ const Event = require("../models/eventModel")
 const Web3 = require("web3")
 const EsaipTickets = require("../../blockchain/build/contracts/EsaipTickets.json")
 const web3 = new Web3("http://127.0.0.1:7545")
-const contractAddress = "0xe428503a4C8327EfD7579e85716fb62795A6C23b"
+const contractAddress = "0xF4D0F38c53c6B2E159445dec8ecD2858b588697c"
 const contract = new web3.eth.Contract(EsaipTickets.abi, contractAddress)
-const addressToMint = "0x0e78b52E897f58b9c9E80c8d9e9a1dfD283c829E"
+const addressToMint = "0x1F4E2968fD524be0FdDEFbF9e49fcf74Da85FF62"
 
 // Multer setup
 const storage = multer.diskStorage({
