@@ -7,9 +7,9 @@ const Event = require("../models/eventModel")
 const Web3 = require("web3")
 const EsaipTickets = require("../../blockchain/build/contracts/EsaipTickets.json")
 const web3 = new Web3("http://127.0.0.1:7545")
-const contractAddress = "0xae97e3e339b885ee28593CCd28c6309614F42B24"
+const contractAddress = "0xe428503a4C8327EfD7579e85716fb62795A6C23b"
 const contract = new web3.eth.Contract(EsaipTickets.abi, contractAddress)
-const addressToMint = "0x5784682bE80458d99940Fda810804D52a83b5133"
+const addressToMint = "0x0e78b52E897f58b9c9E80c8d9e9a1dfD283c829E"
 
 // Multer setup
 const storage = multer.diskStorage({
@@ -25,15 +25,15 @@ const upload = multer({ storage: storage })
 
 router.post("/create", upload.single("image"), async (req, res) => {
 	try {
-		const { name, date, address, place, city, country, tickets: ticketCount } = req.body
+		const { name, date, address, place, city, country, price, tickets: ticketCount } = req.body
 		const tickets = {}
 		const image = req.file.path
 
-		const event = new Event({ name, date, address, place, city, country, tickets, image })
+		const event = new Event({ name, date, address, place, city, country,  price, tickets, image })
 		const savedEvent = await event.save()
 
 		for (let i = 0; i < ticketCount; i++) {
-			const concertId = savedEvent._id // Use the ID of the saved event as concertId
+			const concertId = savedEvent._id.toString()
 
 			const tokenId = await contract.methods
 				.safeMint(addressToMint, concertId)
@@ -68,6 +68,8 @@ router.post("/transfer", async (req, res) => {
 	try {
 		const { senderAddress, receiverAddress, tokenId, eventId } = req.body
 
+		const ticketId = parseInt(tokenId)
+
 		// Find the event by ID
 		const event = await Event.findById(eventId)
 		if (!event) {
@@ -77,7 +79,7 @@ router.post("/transfer", async (req, res) => {
 
 		// Transfer the ticket
 		await contract.methods
-			.safeTransferFrom(senderAddress, receiverAddress, tokenId)
+			.safeTransferFrom(senderAddress, receiverAddress, ticketId)
 			.send({ from: senderAddress, gas: 5000000 })
 			.then((receipt) => {
 				console.log("Ticket successfully transferred from user: ", senderAddress, "to user: ", receiverAddress)
@@ -88,7 +90,7 @@ router.post("/transfer", async (req, res) => {
 			})
 
 		// Remove the ticket from the sender
-		const senderTickets = event.tickets[senderAddress]
+		const senderTickets = event.tickets.get(senderAddress)
 		if (!senderTickets || !senderTickets.includes(tokenId)) {
 			res.status(400).json({ message: "Sender does not have the specified ticket", success: false })
 			return
@@ -96,11 +98,21 @@ router.post("/transfer", async (req, res) => {
 		const ticketIndex = senderTickets.indexOf(tokenId)
 		senderTickets.splice(ticketIndex, 1)
 
-		// Add the ticket to the receiver
-		if (!event.tickets[receiverAddress]) {
-			event.tickets[receiverAddress] = []
+		// If the sender's ticket array is empty, delete the senderAddress from the map
+		if (senderTickets.length === 0) {
+			event.tickets.delete(senderAddress)
+		} else {
+			// Otherwise, update the sender's ticket array in the map
+			event.tickets.set(senderAddress, senderTickets)
 		}
-		event.tickets[receiverAddress].push(tokenId)
+
+		// Add the ticket to the receiver
+		if (!event.tickets.has(receiverAddress)) {
+			event.tickets.set(receiverAddress, [])
+		}
+		let receiverTickets = event.tickets.get(receiverAddress)
+		receiverTickets.push(tokenId)
+		event.tickets.set(receiverAddress, receiverTickets)
 
 		// Save the changes
 		await event.save()
