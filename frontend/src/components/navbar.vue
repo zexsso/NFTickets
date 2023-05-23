@@ -13,7 +13,7 @@
 						<router-link to="/explore" class="mx-3 text-gray-500 font-bold hover:text-gray-200">Explore</router-link>
 						<router-link to="/marketplace" class="mx-3 text-gray-500 font-bold hover:text-gray-200">Marketplace</router-link>
 						<router-link to="/create-event" class="mx-3 text-gray-500 font-bold hover:text-gray-200">Create Event</router-link>
-						<router-link to="/MyTickets" class="mx-3 text-gray-500 font-bold hover:text-gray-200">My tickets</router-link>
+						<router-link to="/mytickets" class="mx-3 text-gray-500 font-bold hover:text-gray-200">My tickets</router-link>
 					</div>
 					<div class="ml-6">
 						<AvatarVue />

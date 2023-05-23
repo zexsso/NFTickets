@@ -10,6 +10,7 @@ router.post("/register", async (req, res) => {
 		const user = new User({
 			username: req.body.username,
 			password: hashedPassword,
+			creator: req.body.is_creator,
 		})
 		const savedUser = await user.save()
 		res.status(201).json({ message: "User registered successfully", success: true })
@@ -31,7 +32,7 @@ router.post("/login", async (req, res) => {
 			res.cookie("token", token, { httpOnly: true })
 			res.json({ message: "Login successful", success: true })
 		} else {
-			res.status(403).json({ message: "Incorrect password", success: false })
+			res.status(401).json({ message: "Incorrect username or password", success: false })
 		}
 	} catch {
 		res.status(500).json({ message: "Server error during login", success: false })

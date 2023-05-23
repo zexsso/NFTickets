@@ -11,7 +11,7 @@
 			</span>
 
 			<div class="flex space-x-2">
-				<InputSwitch v-model="crea" />
+				<InputSwitch v-model="is_creator" />
 				<p>Createur d'événement</p>
 			</div>
 
@@ -30,7 +30,7 @@
 
 	const user = ref(null)
 	const password = ref(null)
-	const crea = ref(false)
+	const is_creator = ref(false)
 
 	const register = () => {
 		fetch("http://localhost:3000/auth/register", {
@@ -42,13 +42,10 @@
 			body: JSON.stringify({
 				username: user.value,
 				password: password.value,
-				crea: crea.value,
+				is_creator: is_creator.value,
 			}),
 		})
 			.then((response) => {
-				if (!response.ok) {
-					throw new Error("Network response was not ok")
-				}
 				return response.json()
 			})
 			.then((data) => {

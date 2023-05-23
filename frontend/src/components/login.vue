@@ -41,9 +41,6 @@
 			}),
 		})
 			.then((response) => {
-				if (!response.ok) {
-					throw new Error("Network response was not ok")
-				}
 				return response.json()
 			})
 			.then((data) => {
@@ -51,7 +48,7 @@
 					toast.add({ severity: "success", summary: "Success", detail: data.message, life: 3000 })
 					router.push("/explore")
 				} else {
-					toast.add({ severity: "warn", summary: "Warning", detail: data.message, life: 3000 })
+					toast.add({ severity: "error", summary: "Warning", detail: data.message, life: 3000 })
 				}
 			})
 			.catch((error) => {
