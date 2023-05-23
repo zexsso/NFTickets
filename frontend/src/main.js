@@ -28,6 +28,8 @@ import Calendar from 'primevue/calendar'
 import FileUpload from 'primevue/fileupload'
 import Menu from 'primevue/menu'
 import Avatar from 'primevue/avatar'
+import ConfirmPopup from 'primevue/confirmpopup'
+import ConfirmationService from 'primevue/confirmationservice'
 
 // Tailwind CSS
 import "./style/tailwind.css"
@@ -40,6 +42,7 @@ app.use(PrimeVue);
 app.use(createPinia())
 app.use(router)
 app.use(ToastService)
+app.use(ConfirmationService)
 
 app.component("Button", Button)
 app.component("Dialog", Dialog)
@@ -58,5 +61,6 @@ app.component("Calendar", Calendar)
 app.component("FileUpload", FileUpload)
 app.component("Menu", Menu)
 app.component("Avatar", Avatar)
+app.component("ConfirmPopup", ConfirmPopup)
 
 app.mount("#app")

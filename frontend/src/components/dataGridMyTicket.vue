@@ -18,7 +18,7 @@
 								<div class="text-xl font-bold">{{ slotProps.data.name }}</div>
 							</div>
 							<div class="flex align-items-center justify-content-between">
-								<span class="text-sm font-semibold">$ {{ slotProps.data.price }}</span>
+								<span class="text-lg font-bold text-green-500">$ {{ slotProps.data.price }}</span>
 								<Button @click="openSell(slotProps.data)" class="bg-indigo-500 hover:bg-indigo-700 text-white border-none p-3" icon="pi pi-shopping-cart" rounded />
 							</div>
 						</div>
