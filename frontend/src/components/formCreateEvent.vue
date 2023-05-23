@@ -44,11 +44,32 @@
 				</div>
 				<div class="flex justify-center space-x-10">
 					<span class="p-float-label">
-						<InputNumber v-model="the_event.tickets" inputId="tickets" mode="decimal" showButtons :min="0" :max="500" />
+						<InputNumber
+							v-model="the_event.tickets"
+							inputId="tickets"
+							mode="decimal"
+							showButtons
+							:min="0"
+							:max="500"
+							:pt="{
+								incrementButton: { class: 'bg-blue-500 border-blue-500' },
+								decrementButton: { class: 'bg-red-500 border-red-500' },
+							}"
+						/>
 						<label for="tickets">Number of tickets</label>
 					</span>
 					<span class="p-float-label">
-						<InputNumber v-model="the_event.price" inputId="price" showButtons mode="currency" currency="EUR" />
+						<InputNumber
+							v-model="the_event.price"
+							inputId="price"
+							showButtons
+							mode="currency"
+							currency="USD"
+							:pt="{
+								incrementButton: { class: 'bg-blue-500 border-blue-500' },
+								decrementButton: { class: 'bg-red-500 border-red-500' },
+							}"
+						/>
 						<label for="tickets">Price of a ticket</label>
 					</span>
 					<FileUpload
