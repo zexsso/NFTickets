@@ -3,11 +3,12 @@ const router = express.Router()
 const User = require("../models/userModel")
 const Web3 = require("web3") // You need to install this package. Node.js does not have fetch built-in.
 const web3 = new Web3("http://127.0.0.1:7545")
+const checkAuth = require('../middlewares/checkAuth');
 
-router.get("/get_balance/:id", async (req, res) => {
+router.get("/get_balance", checkAuth, async (req, res) => {
 	try {
 		// Get user by ID
-		const user = await User.findById(req.params.id)
+		const user = await User.findById(req.user.id)
 
 		// Check if user exists
 		if (!user) {

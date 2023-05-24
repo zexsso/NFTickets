@@ -57,9 +57,9 @@ router.post("/login", async (req, res) => {
 
 	try {
 		if (await bcrypt.compare(req.body.password, user.password)) {
-			const token = jwt.sign({ _id: user._id }, process.env.SECRET_KEY)
+			const token = jwt.sign({ id: user._id, wallet: user.walletAddress, is_creator: user.creator }, process.env.SECRET_KEY)
 			// Set the token in a HttpOnly cookie
-			res.cookie("token", token, { httpOnly: true })
+			res.cookie("session", token, { httpOnly: true })
 			res.json({ message: "Login successful", success: true })
 		} else {
 			res.status(401).json({ message: "Incorrect username or password", success: false })
