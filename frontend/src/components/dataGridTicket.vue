@@ -1,8 +1,6 @@
 <template lang="">
 	<ScrollPanel style="width: 100%; height: 93vh">
 		<DataView :value="products" :layout="'grid'">
-			<template #header> </template>
-
 			<template #grid="slotProps">
 				<div class="col-12 sm:col-6 xl:col-2 p-4">
 					<Button
@@ -47,6 +45,8 @@
 			target: event.currentTarget,
 			message: "Are you sure you want to buy this ticket ?",
 			icon: "pi pi-exclamation-triangle",
+			acceptIcon: "pi pi-check",
+			rejectIcon: "pi pi-times",
 			accept: () => {
 				buyTicket(data)
 			},

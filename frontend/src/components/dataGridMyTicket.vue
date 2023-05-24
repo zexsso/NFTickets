@@ -19,7 +19,7 @@
 							</div>
 							<div class="flex align-items-center justify-content-between">
 								<span class="text-lg font-bold text-green-500">{{ slotProps.data.price }} $</span>
-								<Button @click="openSell(slotProps.data)" class="bg-indigo-500 hover:bg-indigo-700 text-white border-none p-3" icon="pi pi-shopping-cart" rounded />
+								<Button @click="openSell(slotProps.data)" class="bg-indigo-500 hover:bg-indigo-700 text-white border-none p-3" icon="pi pi-dollar" rounded />
 							</div>
 						</div>
 					</div>
@@ -40,8 +40,8 @@
 						mode="currency"
 						currency="USD"
 						:pt="{
-							incrementButton: { class: 'bg-blue-500 border-blue-500' },
-							decrementButton: { class: 'bg-red-500 border-red-500' },
+							incrementButton: { class: 'bg-indigo-600 border-indigo-600 text-white' },
+							decrementButton: { class: 'bg-indigo-600 border-indigo-600 text-white' },
 						}"
 					/>
 					<label for="stacked-buttons">Price</label>
