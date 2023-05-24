@@ -38,20 +38,18 @@ router.post("/add_to_sale", async (req, res) => {
 })
 
 
-// Get all sales for a specific event
-router.get("/:id", async (req, res) => {
-	const eventId = req.params.id
-
+// Get all events with tickets on sale
+router.get("/", async (req, res) => {
 	try {
-		const event = await Event.findById(eventId)
-		if (!event) {
-			return res.status(404).json({ message: "No event found", success: false })
+		const events = await Event.find({ "sale_list.0": { $exists: true } })
+		if (events.length === 0) {
+			return res.status(404).json({ message: "No events with tickets on sale", success: false })
 		}
 
-		res.status(200).json({ sales: event.sale_list, success: true })
+		res.status(200).json({ events: events, success: true })
 	} catch (err) {
 		console.error(err)
-		res.status(500).json({ message: "Server error during fetching sales", success: false })
+		res.status(500).json({ message: "Server error during fetching events", success: false })
 	}
 })
 

@@ -54,13 +54,15 @@ router.post("/", async (req, res) => {
 				}
 
 				// Find receiver user and add the new ticket to their array
-				const receiverUser = await User.findOne({ walletAddress: receiverAddress })
-				if (!receiverUser) {
-					res.status(400).json({ message: "Receiver not found", success: false })
-					return
+				if (receiverAddress != adminWallet) {
+					const receiverUser = await User.findOne({ walletAddress: receiverAddress })
+					if (!receiverUser) {
+						res.status(400).json({ message: "Receiver not found", success: false })
+						return
+					}
+					receiverUser.tickets.push({ eventId: eventId, ticketId: tokenId, price: price, purchaseDate: new Date() })
+					await receiverUser.save()
 				}
-				receiverUser.tickets.push({ eventId: eventId, ticketId: tokenId, price: price, purchaseDate: new Date() })
-				await receiverUser.save()
 			})
 			.catch((error) => {
 				console.error("Error transferring ticket from user: ", senderAddress, "to user: ", receiverAddress)
@@ -91,6 +93,15 @@ router.post("/", async (req, res) => {
 		let receiverTickets = event.tickets.get(receiverAddress)
 		receiverTickets.push(tokenId)
 		event.tickets.set(receiverAddress, receiverTickets)
+
+		if (senderAddress != adminWallet) {
+			// Find the sale in the sale_list and remove it
+			const user = await User.findOne({ walletAddress: senderAddress })
+			const saleIndex = event.sale_list.findIndex((sale) => sale.ticketId == tokenId && sale.seller.toString() == user._id.toString())
+			if (saleIndex != -1) {
+				event.sale_list.splice(saleIndex, 1)
+			}
+		}
 
 		// Save the changes
 		await event.save()
