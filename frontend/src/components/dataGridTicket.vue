@@ -2,14 +2,14 @@
 	<ScrollPanel style="width: 100%; height: 93vh">
 		<DataView :value="products" :layout="'grid'">
 			<template #grid="slotProps">
-				<div class="col-12 sm:col-6 xl:col-2 p-4">
+				<div class="col-12 md:col-6 xl:col-2 p-4">
 					<Button
 						@click="confirmBuy($event, slotProps.data)"
 						class="transition ease-in-out delay-150 bg-none hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 text-white border-none rounded-md"
 					>
 						<div class="p-2 border-1 surface-border surface-card rounded-xl">
 							<div class="flex flex-column align-items-center gap-3 py-5">
-								<img class="w-11 h-40 shadow-2 border-round" :src="`https://primefaces.org/cdn/primevue/images/product/${slotProps.data.image}`" />
+								<img class="w-11 h-40 sm:h-64 xl:h-40 shadow-2 border-round" :src="`https://primefaces.org/cdn/primevue/images/product/${slotProps.data.image}`" />
 								<div class="text-xl font-bold">{{ slotProps.data.name }}</div>
 							</div>
 							<div class="flex align-items-center justify-content-between">
