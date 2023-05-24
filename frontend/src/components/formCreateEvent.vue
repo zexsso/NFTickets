@@ -52,8 +52,8 @@
 							:min="0"
 							:max="500"
 							:pt="{
-								incrementButton: { class: 'bg-blue-500 border-blue-500' },
-								decrementButton: { class: 'bg-red-500 border-red-500' },
+								incrementButton: { class: 'bg-indigo-600 border-indigo-600 text-white' },
+								decrementButton: { class: 'bg-indigo-600 border-indigo-600 text-white' },
 							}"
 						/>
 						<label for="tickets">Number of tickets</label>
@@ -66,8 +66,8 @@
 							mode="currency"
 							currency="USD"
 							:pt="{
-								incrementButton: { class: 'bg-blue-500 border-blue-500' },
-								decrementButton: { class: 'bg-red-500 border-red-500' },
+								incrementButton: { class: 'bg-indigo-600 border-indigo-600 text-white' },
+								decrementButton: { class: 'bg-indigo-600 border-indigo-600 text-white' },
 							}"
 						/>
 						<label for="tickets">Price of a ticket</label>

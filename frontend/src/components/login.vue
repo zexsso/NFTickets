@@ -3,16 +3,16 @@
 		<form @submit.prevent="login" class="flex flex-col px-4 space-y-8">
 			<span class="p-float-label">
 				<InputText v-model="user" inputId="user" />
-				<label for="user">Nom d'utilisateur</label>
+				<label for="user">Username</label>
 			</span>
 			<span class="p-float-label">
 				<Password v-model="password" inputId="password" :feedback="false" />
-				<label for="password">Mot de passe</label>
+				<label for="password">Password</label>
 			</span>
 
 			<Divider />
 
-			<Button label="Connexion" type="submit" icon="pi pi-user-plus" class="mt-4 text-white bg-indigo-600 hover:bg-indigo-700 border border-transparent" />
+			<Button label="Login" type="submit" icon="pi pi-sign-in" class="mt-4 text-white bg-indigo-600 hover:bg-indigo-700 border border-transparent" />
 		</form>
 	</div>
 </template>

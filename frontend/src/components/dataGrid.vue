@@ -17,7 +17,13 @@
 									<i class="pi pi-clock"></i>
 									<span class="font-semibold">{{ slotProps.data.date }}</span>
 								</div>
-								<Tag class="h-8 w-2 text-sm" :value="slotProps.data.total_tickets" :severity="getSeverity(slotProps.data)"></Tag>
+								<Knob
+									class="font-bold"
+									v-model="slotProps.data.total_tickets"
+									readonly
+									:size="60"
+									:strokeWidth="10"
+								/>
 							</div>
 							<div class="flex flex-column align-items-center gap-3 py-5">
 								<img class="w-11 h-72 shadow-2 border-round" :src="`http://localhost:3000/${slotProps.data.image.replace(/\\/g, '/')}`" />
@@ -69,8 +75,8 @@
 	const sortOrder = ref()
 	const sortField = ref()
 	const sortOptions = ref([
-		{ label: "Tickets High to Low", value: "!tickets" },
-		{ label: "Tickets Low to High", value: "tickets" },
+		{ label: "Tickets High to Low", value: "!total_tickets" },
+		{ label: "Tickets Low to High", value: "total_tickets" },
 	])
 
 	onBeforeMount(async () => {
