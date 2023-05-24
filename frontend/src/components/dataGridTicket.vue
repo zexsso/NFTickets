@@ -13,8 +13,10 @@
            						background-size: cover;
            						background-position: center;`"
 						>
-							<div class="flex align-items-center py-5">
-								<div class="text-xl font-bold">{{ slotProps.data.name }}</div>
+							<div class="flex justify-center">
+								<div class="flex align-items-center py-5 h-32">
+									<div class="text-xl font-bold text-center">{{ slotProps.data.name }}</div>
+								</div>
 							</div>
 							<div class="flex align-items-center justify-content-between">
 								<span class="text-lg font-bold text-green-500">{{ slotProps.data.price }} $</span>

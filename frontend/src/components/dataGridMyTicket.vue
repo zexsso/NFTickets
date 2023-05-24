@@ -3,17 +3,17 @@
 		<DataView :value="products" :layout="'grid'">
 			<template #grid="slotProps">
 				<div class="col-12 sm:col-6 xl:col-2 p-4">
-					<div
-						class="cursor-default transition ease-in-out delay-150 bg-none hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 text-white border-none rounded-md p-3"
-					>
+					<div class="cursor-default transition ease-in-out delay-150 bg-none hover:-translate-y-1 hover:scale-105 duration-300 text-white border-none rounded-md p-3">
 						<div
 							class="transition ease-in-out delay-150 p-2 border-1 surface-border surface-card rounded-xl"
 							:style="`background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://primefaces.org/cdn/primevue/images/product/${slotProps.data.image}');
            						background-size: cover;
            						background-position: center;`"
 						>
-							<div class="flex flex-column align-items-center gap-3 py-5">
-								<div class="text-xl font-bold">{{ slotProps.data.name }}</div>
+							<div class="flex justify-center">
+								<div class="flex align-items-center py-5 h-32">
+									<div class="text-xl font-bold text-center">{{ slotProps.data.name }}</div>
+								</div>
 							</div>
 							<div class="flex align-items-center justify-content-between">
 								<span class="text-lg font-bold text-green-500">{{ slotProps.data.price }} $</span>
@@ -26,7 +26,7 @@
 		</DataView>
 	</ScrollPanel>
 
-	<Dialog header="Vente" v-model:visible="visibleSell" :modal="true" :style="{ width: '30vw' }">
+	<Dialog header="Sell" v-model:visible="visibleSell" :modal="true" :style="{ width: '30vw' }">
 		<div class="flex justify-center mt-12">
 			<form @submit.prevent="sell" class="flex flex-col px-4 space-y-8">
 				<h2 class="text-xl font-bold mb-4">{{ selectedObject.name }}</h2>
