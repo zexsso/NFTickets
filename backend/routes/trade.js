@@ -2,7 +2,6 @@ const express = require("express")
 const router = express.Router()
 const User = require("../models/userModel")
 const Event = require("../models/eventModel")
-const Sale = require("../models/saleModel")
 
 const Web3 = require("web3") // You need to install this package. Node.js does not have fetch built-in.
 const web3 = new Web3("http://127.0.0.1:7545")

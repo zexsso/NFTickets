@@ -1,6 +1,5 @@
 const express = require("express")
 const router = express.Router()
-const Sale = require("../models/saleModel")
 const User = require("../models/userModel")
 const Event = require("../models/eventModel")
 
@@ -20,38 +19,36 @@ router.post("/add_to_sale", async (req, res) => {
 		return res.status(404).json({ message: "User not found", success: false })
 	}
 
-	// Create a new sale document
-	const sale = new Sale({
-		eventId: eventId,
-		tickets: [
-			{
-				ticketId: ticketId,
-				seller: seller,
-				price: price,
-			},
-		],
-	})
+	// Create a new sale document and add it to the event
+	const sale = {
+		ticketId: ticketId,
+		seller: seller,
+		price: price,
+	}
+
+	event.sale_list.push(sale)
 
 	try {
-		const savedSale = await sale.save()
-		res.status(201).json({ message: "Sale successfully created", success: true })
+		await event.save()
+		res.status(201).json({ message: "Sale successfully added to the event", success: true })
 	} catch (err) {
 		console.error(err)
 		res.status(500).json({ message: "Server error during sale creation", success: false })
 	}
 })
 
+
 // Get all sales for a specific event
 router.get("/:id", async (req, res) => {
 	const eventId = req.params.id
 
 	try {
-		const sales = await Sale.find({ eventId: eventId })
-		if (!sales) {
-			return res.status(404).json({ message: "No sales found for this event", success: false })
+		const event = await Event.findById(eventId)
+		if (!event) {
+			return res.status(404).json({ message: "No event found", success: false })
 		}
 
-		res.status(200).json({ sales: sales, success: true })
+		res.status(200).json({ sales: event.sale_list, success: true })
 	} catch (err) {
 		console.error(err)
 		res.status(500).json({ message: "Server error during fetching sales", success: false })
