@@ -4,7 +4,7 @@
 			<NavbarVue />
 		</div>
 		<div class="flex h-full">
-			<DataGridTicketVue />
+			<DataGridMarketVue />
 		</div>
 	</div>
 
@@ -14,5 +14,5 @@
 	import { ref } from "vue"
 
 	import NavbarVue from "../components/navbar.vue"
-	import DataGridTicketVue from "../components/dataGridTicket.vue"
+	import DataGridMarketVue from "../components/dataGridMarket.vue"
 </script>
