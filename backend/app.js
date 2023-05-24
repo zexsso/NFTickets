@@ -3,6 +3,8 @@ const express = require("express")
 const connectDB = require("./config/db")
 const authRoutes = require("./routes/auth")
 const eventRoutes = require("./routes/events")
+const saleRoutes = require("./routes/sales")
+const tradeRoutes = require("./routes/trade")
 const cors = require("cors")
 const app = express()
 const port = process.env.PORT
@@ -19,6 +21,8 @@ app.use(express.json())
 
 app.use("/auth", authRoutes)
 app.use("/events", eventRoutes)
+app.use("/sales", saleRoutes)
+app.use("/trade", tradeRoutes)
 app.use('/uploads', express.static('uploads'))
 
 app.get("/", (req, res) => {
