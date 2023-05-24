@@ -1,8 +1,11 @@
 <template lang="">
-	<ScrollPanel style="width: 100%; height: 93vh">
+	<ScrollPanel style="width: 100%; height: 60vh">
 		<DataView :value="products" :layout="'grid'">
+			<template #header>
+				
+			</template>
 			<template #grid="slotProps">
-				<div class="col-12 md:col-6 xl:col-2 p-4">
+				<div class="col-12 md:col-6 xl:col-3 p-4">
 					<Button
 						@click="confirmBuy($event, slotProps.data)"
 						class="transition ease-in-out delay-150 bg-none hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 text-white border-none rounded-md"
