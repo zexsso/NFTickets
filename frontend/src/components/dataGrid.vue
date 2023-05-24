@@ -6,29 +6,27 @@
 			</template>
 
 			<template #grid="slotProps">
-				<div class="col-12 sm:col-6 xl:col-3 p-4">
+				<div class="col-12 sm:col-6 xl:col-4 p-4">
 					<Button
 						@click="openDescription(slotProps.data)"
 						class="w-11 justify-center transition ease-in-out delay-150 bg-none hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 text-white border-none rounded-md"
 					>
-						<div class="w-12 p-3 border-1 surface-border surface-card rounded-xl">
+						<div
+							class="w-12 p-3 border-1 surface-border surface-card rounded-xl"
+							:style="`background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('http://localhost:3000/${slotProps.data.image.replace(/\\/g, '/')}');
+           						background-size: cover;
+           						background-position: center;`"
+						>
 							<div class="flex flex-wrap align-items-center justify-content-between gap-2">
 								<div class="flex align-items-center gap-2">
 									<i class="pi pi-clock"></i>
 									<span class="font-semibold">{{ slotProps.data.date }}</span>
 								</div>
-								<Knob
-									class="font-bold"
-									v-model="slotProps.data.total_tickets"
-									readonly
-									:size="60"
-									:strokeWidth="10"
-								/>
+								<Tag class="h-8 w-2 font-bold" :value="slotProps.data.total_tickets" :severity="getSeverity(slotProps.data)"></Tag>
 							</div>
 							<div class="flex flex-column align-items-center gap-3 py-5">
-								<img class="w-11 min-h-72 shadow-2 border-round" :src="`http://localhost:3000/${slotProps.data.image.replace(/\\/g, '/')}`" />
 								<div class="text-2xl font-bold">{{ slotProps.data.name }}</div>
-								<div class="text-xl font-bold">{{ slotProps.data.city }}</div>
+								<div class="text-lg italic font-bold">{{ slotProps.data.city }}</div>
 							</div>
 							<div class="flex align-items-center justify-content-between">
 								<span class="text-lg font-bold text-green-500">{{ slotProps.data.price }} $</span>
