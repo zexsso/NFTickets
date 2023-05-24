@@ -39,25 +39,29 @@
 		</DataView>
 	</ScrollPanel>
 
-	<Dialog header="Description" v-model:visible="visibleDescript" :modal="true" :style="{ width: '35vw' }">
-		<div class="p-6">
-			<h2 class="text-xl font-bold mb-4">{{ selectedObject.name }}</h2>
+	<Dialog v-if="visibleDescript" :header="selectedObject.name" :draggable="false" v-model:visible="visibleDescript" :modal="true" :style="{ width: '35vw' }">
+		<div class="p-2">
 			<div class="flex justify-center">
 				<img :src="`http://localhost:3000/${selectedObject.image.replace(/\\/g, '/')}`" class="w-full h-56 object-cover mb-4" />
 			</div>
-			<p class="mb-4"><strong>Date :</strong> {{ selectedObject.date }}</p>
-			<p class="mb-4"><strong>Address :</strong> {{ selectedObject.address }}</p>
-			<p class="mb-4"><strong>City :</strong> {{ selectedObject.city }}</p>
-			<p class="mb-4"><strong>Country :</strong> {{ selectedObject.country }}</p>
-			<p class="mb-4"><strong>Tickets Available :</strong> {{ selectedObject.total_tickets }}</p>
-			<p class="mb-4 text-green-500 font-bold"><strong class="text-white font-normal">Price :</strong> {{ selectedObject.price }} $</p>
-			<div class="flex space-x-2">
-				<Button @click="buyTicket(selectedObject)" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" :disabled="selectedObject.tickets === 0"
-					>Buy Ticket</Button
-				>
+			<div class="flex justify-between">
+				<p class="mb-4"><strong>Date :</strong> {{ formatDate(selectedObject.date) }}</p>
+				<p class="mb-4"><strong>Address :</strong> {{ selectedObject.address }}</p>
+			</div>
+			<div class="flex justify-between">
+				<p class="mb-4"><strong>Country :</strong> {{ selectedObject.country }}</p>
+				<p class="mb-4"><strong>City :</strong> {{ selectedObject.city }}</p>
+			</div>
+			<div class="flex justify-between items-center">
+				<p><strong>Tickets Available :</strong> {{ selectedObject.total_tickets }}</p>
+				<p class="text-green-500 font-bold"><strong class="text-white font-normal">Price :</strong> {{ selectedObject.price }} $</p>
+
 				<Button @click="goMarket()" v-if="selectedObject.tickets === 0" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded border-none">
 					<router-link to="/marketplace">Go to market place</router-link>
 				</Button>
+				<Button @click="buyTicket(selectedObject)" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" :disabled="selectedObject.tickets === 0"
+					>Buy Ticket</Button
+				>
 			</div>
 		</div>
 	</Dialog>
@@ -65,7 +69,7 @@
 
 <script setup>
 	import { ref, onBeforeMount } from "vue"
-	import { format } from 'date-fns'
+	import { format } from "date-fns"
 
 	const products = ref()
 

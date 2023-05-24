@@ -62,7 +62,7 @@ router.post("/create", upload.single("image"), async (req, res) => {
 	} catch (err) {
 		console.error(err)
 		res.status(500).json({ message: "Server error during event creation", success: false })
-	}
+ 	}
 })
 
 router.get("/:id", async (req, res) => {

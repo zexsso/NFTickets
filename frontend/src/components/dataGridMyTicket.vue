@@ -1,15 +1,11 @@
 <template lang="">
 	<ScrollPanel style="width: 100%; height: 93vh">
 		<DataView :value="products" :layout="'grid'">
-			<template #header>
-				<div class="text-5xl font-extrabold ml-10">
-					<span class="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500"> My tickets </span>
-				</div>
-			</template>
-
 			<template #grid="slotProps">
 				<div class="col-12 sm:col-6 xl:col-2 p-4">
-					<div class="cursor-default transition ease-in-out delay-150 bg-none hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 text-white border-none rounded-md p-3">
+					<div
+						class="cursor-default transition ease-in-out delay-150 bg-none hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 text-white border-none rounded-md p-3"
+					>
 						<div
 							class="transition ease-in-out delay-150 p-2 border-1 surface-border surface-card rounded-xl"
 							:style="`background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://primefaces.org/cdn/primevue/images/product/${slotProps.data.image}');
