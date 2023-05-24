@@ -113,7 +113,6 @@
 
 	const submitForm = async () => {
 		const formData = new FormData()
-
 		formData.append("name", the_event.value.name)
 		formData.append("date", the_event.value.date)
 		formData.append("address", the_event.value.address)

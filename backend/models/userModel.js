@@ -16,6 +16,7 @@ const userSchema = new mongoose.Schema({
 	creator: { type: Boolean, required: true },
 	walletAddress: { type: String },
 	tickets: [ticketSchema],
+	image: String,
 })
 
 module.exports = mongoose.model("User", userSchema)

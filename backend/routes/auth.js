@@ -1,26 +1,40 @@
 const express = require("express")
+const multer = require("multer")
 const router = express.Router()
 const User = require("../models/userModel")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
-const Web3 = require("web3")
+const Web3 = require("web3") // You need to install this package. Node.js does not have fetch built-in.
 const web3 = new Web3("http://127.0.0.1:7545")
 
-let accounts
-let addressToMint
-async function getWallet() {
-	accounts = await web3.eth.getAccounts()
-	addressToMint = accounts[0]
-}
-getWallet()
+const { get_infos } = require("../scripts/web3setup")
+// Setup Web3 and contract
+let adminWallet
+let contract
+get_infos().then((infos) => {
+	adminWallet = infos.adminWallet
+	contract = infos.contract
+})
 
-router.post("/register", async (req, res) => {
+// Multer setup
+const storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, "./uploads/avatar")
+	},
+	filename: function (req, file, cb) {
+		cb(null, Date.now() + "-" + file.originalname)
+	},
+})
+
+const upload = multer({ storage: storage })
+
+router.post("/register", upload.single("image"), async (req, res) => {
 	try {
 		const hashedPassword = await bcrypt.hash(req.body.password, 10)
 		// Create a new Ethereum wallet
 		const newAccount = await web3.eth.personal.newAccount(req.body.username)
 		// Send 5 ETH to the new wallet
-		await web3.eth.sendTransaction({ to: newAccount, from: accounts[0], value: web3.utils.toWei("5", "ether") })
+		await web3.eth.sendTransaction({ to: newAccount, from: adminWallet, value: web3.utils.toWei("5", "ether") })
 
 		const user = new User({
 			username: req.body.username,

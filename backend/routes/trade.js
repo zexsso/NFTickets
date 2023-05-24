@@ -4,24 +4,16 @@ const User = require("../models/userModel")
 const Event = require("../models/eventModel")
 const Sale = require("../models/saleModel")
 
-// Setup Web3 and contract
-const Web3 = require("web3")
-const EsaipTickets = require("../../blockchain/build/contracts/EsaipTickets.json")
+const Web3 = require("web3") // You need to install this package. Node.js does not have fetch built-in.
 const web3 = new Web3("http://127.0.0.1:7545")
-let accounts
-let addressToMint
+const { get_infos } = require("../scripts/web3setup")
+// Setup Web3 and contract
+let adminWallet
 let contract
-
-async function get_infos() {
-	accounts = await web3.eth.getAccounts()
-	addressToMint = accounts[0]
-
-	// Instead of hardcoding the contract address, use the address from the artifact
-	const networkId = await web3.eth.net.getId()
-	const deployedAddress = EsaipTickets.networks[networkId].address
-	contract = new web3.eth.Contract(EsaipTickets.abi, deployedAddress)
-}
-get_infos()
+get_infos().then((infos) => {
+	adminWallet = infos.adminWallet
+	contract = infos.contract
+})
 
 router.post("/", async (req, res) => {
 	try {
@@ -36,7 +28,7 @@ router.post("/", async (req, res) => {
 			return
 		}
 
-		if (senderAddress != addressToMint) {
+		if (senderAddress != adminWallet) {
 			const user = await User.findOne({ walletAddress: senderAddress })
 			await web3.eth.personal.unlockAccount(senderAddress, user.username, 600) // 600 seconds = 10 minutes
 		}
@@ -48,8 +40,8 @@ router.post("/", async (req, res) => {
 			.then(async (receipt) => {
 				console.log("Ticket successfully transferred from user: ", senderAddress, "to user: ", receiverAddress)
 
-				// Find sender user and remove the ticket from their array, if sender != addressToMint
-				if (senderAddress != addressToMint) {
+				// Find sender user and remove the ticket from their array, if sender != adminWallet
+				if (senderAddress != adminWallet) {
 					const senderUser = await User.findOne({ walletAddress: senderAddress })
 					if (!senderUser) {
 						res.status(400).json({ message: "Sender not found", success: false })

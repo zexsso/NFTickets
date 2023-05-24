@@ -1,27 +1,16 @@
 const express = require("express")
-const router = express.Router()
 const multer = require("multer")
+const router = express.Router()
 const Event = require("../models/eventModel")
-const User = require("../models/userModel")
 
+const { get_infos } = require("../scripts/web3setup")
 // Setup Web3 and contract
-const Web3 = require("web3")
-const EsaipTickets = require("../../blockchain/build/contracts/EsaipTickets.json")
-const web3 = new Web3("http://127.0.0.1:7545")
-let accounts
-let addressToMint
+let adminWallet
 let contract
-
-async function get_infos() {
-	accounts = await web3.eth.getAccounts()
-	addressToMint = accounts[0]
-
-	// Instead of hardcoding the contract address, use the address from the artifact
-	const networkId = await web3.eth.net.getId()
-	const deployedAddress = EsaipTickets.networks[networkId].address
-	contract = new web3.eth.Contract(EsaipTickets.abi, deployedAddress)
-}
-get_infos()
+get_infos().then((infos) => {
+	adminWallet = infos.adminWallet
+	contract = infos.contract
+})
 
 // Multer setup
 const storage = multer.diskStorage({
@@ -48,21 +37,21 @@ router.post("/create", upload.single("image"), async (req, res) => {
 			const concertId = savedEvent._id.toString()
 
 			const tokenId = await contract.methods
-				.safeMint(addressToMint, concertId)
-				.send({ from: addressToMint, gas: 5000000 })
+				.safeMint(adminWallet, concertId)
+				.send({ from: adminWallet, gas: 5000000 })
 				.then((receipt) => {
-					console.log("Ticket successfully minted for user: ", addressToMint, "with concert ID: ", concertId)
+					console.log("Ticket successfully minted for user: ", adminWallet, "with concert ID: ", concertId)
 					return receipt.events.Transfer.returnValues.tokenId // Get tokenId from event
 				})
 				.catch((error) => {
-					console.error("Error minting ticket for user: ", addressToMint, "with concert ID: ", concertId)
+					console.error("Error minting ticket for user: ", adminWallet, "with concert ID: ", concertId)
 				})
 
 			// Add the ticket ID to the list of tickets for the user
-			if (!tickets[addressToMint]) {
-				tickets[addressToMint] = []
+			if (!tickets[adminWallet]) {
+				tickets[adminWallet] = []
 			}
-			tickets[addressToMint].push(String(tokenId))
+			tickets[adminWallet].push(String(tokenId))
 		}
 
 		// Update the event with the tickets

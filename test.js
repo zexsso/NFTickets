@@ -1,5 +1,5 @@
 const Web3 = require("web3")
-const EsaipTickets = require("../blockchain/build/contracts/EsaipTickets.json")
+const EsaipTickets = require("./blockchain/build/contracts/EsaipTickets.json")
 
 // Créez une instance de Web3 en se connectant à votre réseau Ganache local
 const web3 = new Web3("http://127.0.0.1:7545") // Remplacez l'URL par celle de votre réseau Ganache

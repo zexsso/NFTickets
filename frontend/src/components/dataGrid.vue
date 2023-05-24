@@ -15,15 +15,9 @@
 							<div class="flex flex-wrap align-items-center justify-content-between gap-2">
 								<div class="flex align-items-center gap-2">
 									<i class="pi pi-clock"></i>
-									<span class="font-semibold">{{ slotProps.data.date }}</span>
+									<span class="font-semibold">{{ formatDate(slotProps.data.date) }}</span>
 								</div>
-								<Knob
-									class="font-bold"
-									v-model="slotProps.data.total_tickets"
-									readonly
-									:size="60"
-									:strokeWidth="10"
-								/>
+								<Knob class="font-bold" v-model="slotProps.data.total_tickets" readonly :size="60" :strokeWidth="10" />
 							</div>
 							<div class="flex flex-column align-items-center gap-3 py-5">
 								<img class="w-11 min-h-72 shadow-2 border-round" :src="`http://localhost:3000/${slotProps.data.image.replace(/\\/g, '/')}`" />
@@ -67,6 +61,7 @@
 
 <script setup>
 	import { ref, onBeforeMount } from "vue"
+	import { format } from 'date-fns'
 
 	const products = ref()
 
@@ -130,5 +125,10 @@
 		} else {
 			return null
 		}
+	}
+
+	function formatDate(dateString) {
+		const date = new Date(dateString)
+		return format(date, "EEEE dd MMMM HH:mm")
 	}
 </script>
