@@ -1,9 +1,7 @@
 <template lang="">
 	<ScrollPanel style="width: 100%; height: 60vh">
 		<DataView :value="products" :layout="'grid'">
-			<template #header>
-				
-			</template>
+			<template #header> </template>
 			<template #grid="slotProps">
 				<div class="col-12 md:col-6 xl:col-3 p-4">
 					<Button
@@ -11,14 +9,14 @@
 						class="transition ease-in-out delay-150 bg-none hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 text-white border-none rounded-md"
 					>
 						<div
-							class="transition ease-in-out delay-150 p-2 border-1 surface-border surface-card rounded-xl"
+							class="w-40 transition ease-in-out delay-150 p-2 border-1 surface-border surface-card rounded-xl"
 							:style="`background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://primefaces.org/cdn/primevue/images/product/${slotProps.data.image}');
            						background-size: cover;
            						background-position: center;`"
 						>
 							<div class="flex justify-center">
 								<div class="flex align-items-center py-5 h-32">
-									<div class="text-xl font-bold text-center">{{ slotProps.data.name }}</div>
+									<div class="text-xl font-bold text-center">{{ slotProps.data.ticketId }}</div>
 								</div>
 							</div>
 							<div class="flex align-items-center justify-content-between">
@@ -35,16 +33,28 @@
 </template>
 
 <script setup>
-	import { ref, onMounted } from "vue"
+	import { ref, onBeforeMount, defineProps } from "vue"
 	import { useConfirm } from "primevue/useconfirm"
 	import { useToast } from "primevue/usetoast"
 
-	import { ProductService } from "../../TestData/dataTicket"
+	const props = defineProps(["maProp"])
 
-	onMounted(() => {
-		ProductService.getProducts().then((data) => (products.value = data.slice()))
+	onBeforeMount(async () => {
+		try {
+			const event = "test"
+			const response = await fetch("http://localhost:3000/sales/") // Make a GET request to the API endpoint
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`)
+			}
+			const data = await response.json() // Parse the JSON data from the response
+
+			// Assign the data to the products value
+			const eventWithSpecifiedId = data.events.find(event => event._id === props.maProp)
+			products.value = eventWithSpecifiedId.sale_list
+		} catch (error) {
+			console.error("Fetch failed: ", error)
+		}
 	})
-
 	const products = ref()
 	const confirm = useConfirm()
 	const toast = useToast()
@@ -59,14 +69,12 @@
 			accept: () => {
 				buyTicket(data)
 			},
-			reject: () => {
-				toast.add({ severity: "error", summary: "Rejected", detail: "You have rejected", life: 3000 })
-			},
+			reject: () => {},
 		})
 	}
 
 	function buyTicket(data) {
 		toast.add({ severity: "info", summary: "Confirmed", detail: "You have accepted", life: 3000 })
-		// process the ticket buying here
+		console.log(data)
 	}
 </script>

@@ -55,7 +55,7 @@
 				<p class="text-green-500 font-bold"><strong class="text-white font-normal">Price :</strong> {{ selectedObject.price }} $</p>
 			</div>
 			<div class="flex h-full">
-				<DataGridTicketVue />
+				<DataGridTicketVue :maProp="valeurProp"/>
 			</div>
 		</div>
 	</Dialog>
@@ -68,6 +68,8 @@
 
 	const products = ref()
 
+    const valeurProp = ref()
+
 	const sortKey = ref()
 	const sortOrder = ref()
 	const sortField = ref()
@@ -78,7 +80,7 @@
 
 	onBeforeMount(async () => {
 		try {
-			const response = await fetch("http://localhost:3000/events/") // Make a GET request to the API endpoint
+			const response = await fetch("http://localhost:3000/sales/") // Make a GET request to the API endpoint
 			if (!response.ok) {
 				throw new Error(`HTTP error! status: ${response.status}`)
 			}
@@ -96,11 +98,8 @@
 
 	function openDescription(data) {
 		selectedObject.value = data
+        valeurProp.value = selectedObject.value._id
 		visibleDescript.value = true
-	}
-
-	function buyTicket(data) {
-		// process the ticket buying here
 	}
 
 	const onSortChange = (event) => {
