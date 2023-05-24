@@ -9,9 +9,9 @@
 				<div class="col-12 sm:col-6 xl:col-3 p-4">
 					<Button
 						@click="openDescription(slotProps.data)"
-						class="w-11 justify-center transition ease-in-out delay-150 bg-none hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 text-white border-none rounded-md"
+						class="min-w-11 justify-center transition ease-in-out delay-150 bg-none hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 text-white border-none rounded-md"
 					>
-						<div class="w-12 p-3 border-1 surface-border surface-card rounded-xl">
+						<div class="min-w-12 p-3 border-1 surface-border surface-card rounded-xl">
 							<div class="flex flex-wrap align-items-center justify-content-between gap-2">
 								<div class="flex align-items-center gap-2">
 									<i class="pi pi-clock"></i>
