@@ -8,16 +8,20 @@ const User = require("../models/userModel")
 const Web3 = require("web3")
 const EsaipTickets = require("../../blockchain/build/contracts/EsaipTickets.json")
 const web3 = new Web3("http://127.0.0.1:7545")
-const contractAddress = "0x8ab0A208b70a5172379D2C44aA12A5CFf060681a"
 let accounts
 let addressToMint
+let contract
 
-async function getWallet() {
+async function get_infos() {
 	accounts = await web3.eth.getAccounts()
 	addressToMint = accounts[0]
+
+	// Instead of hardcoding the contract address, use the address from the artifact
+	const networkId = await web3.eth.net.getId()
+	const deployedAddress = EsaipTickets.networks[networkId].address
+	contract = new web3.eth.Contract(EsaipTickets.abi, deployedAddress)
 }
-getWallet()
-const contract = new web3.eth.Contract(EsaipTickets.abi, contractAddress)
+get_infos()
 
 // Multer setup
 const storage = multer.diskStorage({
