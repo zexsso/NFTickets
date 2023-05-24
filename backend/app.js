@@ -5,6 +5,7 @@ const authRoutes = require("./routes/auth")
 const eventRoutes = require("./routes/events")
 const saleRoutes = require("./routes/sales")
 const tradeRoutes = require("./routes/trade")
+const balanceRoutes = require("./routes/balance")
 const cors = require("cors")
 const app = express()
 const port = process.env.PORT
@@ -23,6 +24,7 @@ app.use("/auth", authRoutes)
 app.use("/events", eventRoutes)
 app.use("/sales", saleRoutes)
 app.use("/trade", tradeRoutes)
+app.use("/", balanceRoutes)
 app.use('/uploads', express.static('uploads'))
 
 app.get("/", (req, res) => {
