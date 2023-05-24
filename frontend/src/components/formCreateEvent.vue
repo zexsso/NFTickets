@@ -141,6 +141,7 @@
 			toast.add({ severity: "error", summary: "Error", detail: err.message, life: 3000 })
 		}
 	}
+
 	const img_upload = (event) => {
 		the_event.value.image = event.files[0]
 	}

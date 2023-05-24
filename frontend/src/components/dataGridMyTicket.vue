@@ -14,7 +14,7 @@
 					>
 						<div class="transition ease-in-out delay-150 p-2 border-1 surface-border surface-card rounded-xl">
 							<div class="flex flex-column align-items-center gap-3 py-5">
-								<img class="w-11 h-40 shadow-2 border-round" :src="`https://primefaces.org/cdn/primevue/images/product/${slotProps.data.image}`" />
+								<img class="w-11 min-h-40 shadow-2 border-round" :src="`https://primefaces.org/cdn/primevue/images/product/${slotProps.data.image}`" />
 								<div class="text-xl font-bold">{{ slotProps.data.name }}</div>
 							</div>
 							<div class="flex align-items-center justify-content-between">
