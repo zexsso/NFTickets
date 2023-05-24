@@ -66,8 +66,7 @@
 </template>
 
 <script setup>
-	import { ref, onMounted, onBeforeMount } from "vue"
-	import { ProductService } from "../../TestData/dataEvent"
+	import { ref, onBeforeMount } from "vue"
 
 	const products = ref()
 
