@@ -9,12 +9,14 @@
 
 			<template #grid="slotProps">
 				<div class="col-12 sm:col-6 xl:col-2 p-4">
-					<div
-						class="cursor-default transition ease-in-out delay-150 bg-none hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 text-white border-none rounded-md p-3"
-					>
-						<div class="transition ease-in-out delay-150 p-2 border-1 surface-border surface-card rounded-xl">
+					<div class="cursor-default transition ease-in-out delay-150 bg-none hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 text-white border-none rounded-md p-3">
+						<div
+							class="transition ease-in-out delay-150 p-2 border-1 surface-border surface-card rounded-xl"
+							:style="`background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://primefaces.org/cdn/primevue/images/product/${slotProps.data.image}');
+           						background-size: cover;
+           						background-position: center;`"
+						>
 							<div class="flex flex-column align-items-center gap-3 py-5">
-								<img class="w-11 min-h-40 shadow-2 border-round" :src="`https://primefaces.org/cdn/primevue/images/product/${slotProps.data.image}`" />
 								<div class="text-xl font-bold">{{ slotProps.data.name }}</div>
 							</div>
 							<div class="flex align-items-center justify-content-between">

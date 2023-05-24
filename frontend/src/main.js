@@ -30,7 +30,6 @@ import Menu from 'primevue/menu'
 import Avatar from 'primevue/avatar'
 import ConfirmPopup from 'primevue/confirmpopup'
 import ConfirmationService from 'primevue/confirmationservice'
-import Knob from 'primevue/knob'
 
 // Tailwind CSS
 import "./style/tailwind.css"
@@ -63,6 +62,5 @@ app.component("FileUpload", FileUpload)
 app.component("Menu", Menu)
 app.component("Avatar", Avatar)
 app.component("ConfirmPopup", ConfirmPopup)
-app.component("Knob", Knob)
 
 app.mount("#app")

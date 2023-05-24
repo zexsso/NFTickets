@@ -15,7 +15,21 @@
 						<router-link to="/create-event" class="mx-3 text-gray-500 font-bold hover:text-gray-200">Create Event</router-link>
 						<router-link to="/mytickets" class="mx-3 text-gray-500 font-bold hover:text-gray-200">My tickets</router-link>
 					</div>
-					<div class="ml-6">
+					<Divider class="ml-2" layout="vertical" />
+					<div class="flex flex-col">
+						<div>
+							<span class="font-bold text-green-500">$ {{ balanceUSD }}</span>
+						</div>
+						<div>
+							<span class="flex font-bold text-indigo-500 space-x-1 items-center">
+								<img class="h-4 w-auto" src="../../images/Eth.png" />
+								<div>
+									{{ balanceETH }}
+								</div>
+							</span>
+						</div>
+					</div>
+					<div class="ml-7">
 						<AvatarVue />
 					</div>
 				</div>
@@ -27,6 +41,9 @@
 <script setup>
 	import { ref } from "vue"
 	import AvatarVue from "./Avatar.vue"
+
+	const balanceUSD = ref(100)
+	const balanceETH = ref(2.538)
 </script>
 
 <style scoped>
