@@ -2,14 +2,22 @@ const express = require("express")
 const router = express.Router()
 const multer = require("multer")
 const Event = require("../models/eventModel")
+const User = require("../models/userModel")
 
 // Setup Web3 and contract
 const Web3 = require("web3")
 const EsaipTickets = require("../../blockchain/build/contracts/EsaipTickets.json")
 const web3 = new Web3("http://127.0.0.1:7545")
-const contractAddress = "0xF4D0F38c53c6B2E159445dec8ecD2858b588697c"
+const contractAddress = "0x8ab0A208b70a5172379D2C44aA12A5CFf060681a"
+let accounts
+let addressToMint
+
+async function getWallet() {
+	accounts = await web3.eth.getAccounts()
+	addressToMint = accounts[0]
+}
+getWallet()
 const contract = new web3.eth.Contract(EsaipTickets.abi, contractAddress)
-const addressToMint = "0x1F4E2968fD524be0FdDEFbF9e49fcf74Da85FF62"
 
 // Multer setup
 const storage = multer.diskStorage({
@@ -75,6 +83,11 @@ router.post("/transfer", async (req, res) => {
 		if (!event) {
 			res.status(400).json({ message: "Event not found", success: false })
 			return
+		}
+
+		if (senderAddress != addressToMint) {
+			const user = await User.findOne({ walletAddress: senderAddress })
+			await web3.eth.personal.unlockAccount(senderAddress, user.username, 600) // 600 seconds = 10 minutes
 		}
 
 		// Transfer the ticket
