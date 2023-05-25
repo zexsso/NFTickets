@@ -1,6 +1,7 @@
 <template lang="">
 	<ScrollPanel style="width: 100%; height: 93vh">
-		<DataView :value="products" :layout="'grid'" :sortOrder="sortOrder" :sortField="sortField">>
+		<DataView :value="products" :layout="'grid'" :sortOrder="sortOrder" :sortField="sortField"
+			>>
 
 			<template #grid="slotProps">
 				<div class="col-12 sm:col-6 xl:col-4 p-4">
@@ -102,7 +103,40 @@
 	}
 
 	function buyTicket(data) {
-		// process the ticket buying here
+		async function buyTicket(data) {
+			const senderAddress = "TODO" // Replace with actual sender address
+			const receiverAddress = "TODO" // Replace with actual receiver address
+			const tokenId = "TODO" // Replace with actual token id
+			const eventId = data.id // Assumed from the data object
+			const price = data.price // Assumed from the data object
+
+			const bodyData = {
+				senderAddress: senderAddress,
+				receiverAddress: receiverAddress,
+				tokenId: tokenId,
+				eventId: eventId,
+				price: price,
+			}
+
+			try {
+				const response = await fetch("http://localhost:3000/yourApiEndpoint", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(bodyData),
+				})
+
+				if (!response.ok) {
+					throw new Error(`HTTP error! status: ${response.status}`)
+				}
+
+				const json = await response.json()
+				console.log(json) // Log the response for now
+			} catch (error) {
+				console.error("Fetch failed: ", error)
+			}
+		}
 	}
 
 	const onSortChange = (event) => {

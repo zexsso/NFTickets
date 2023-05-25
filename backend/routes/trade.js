@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 const User = require("../models/userModel")
 const Event = require("../models/eventModel")
+const checkAuth = require("../middlewares/checkAuth")
 
 const Web3 = require("web3") // You need to install this package. Node.js does not have fetch built-in.
 const web3 = new Web3("http://127.0.0.1:7545")
@@ -14,9 +15,18 @@ get_infos().then((infos) => {
 	contract = infos.contract
 })
 
-router.post("/", async (req, res) => {
+router.post("/", checkAuth, async (req, res) => {
 	try {
-		const { senderAddress, receiverAddress, tokenId, eventId, price } = req.body
+		const { tokenId, eventId, price } = req.body
+		
+		if (tokenId === null){
+			const senderAddress = adminWallet
+		}
+		else{
+			
+		}
+
+		const receiverAddress = req.user.wallet
 
 		const ticketId = parseInt(tokenId)
 
