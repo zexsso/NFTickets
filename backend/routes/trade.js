@@ -18,14 +18,21 @@ get_infos().then((infos) => {
 router.post("/", checkAuth, async (req, res) => {
 	try {
 		const { tokenId, eventId, price } = req.body
+		let senderAddress
 		
-		if (tokenId === null){
-			const senderAddress = adminWallet
+		if (tokenId == null) {
+			senderAddress = adminWallet
+		} else {
+			await contract.methods
+				.ownerOf(tokenId)
+				.call()
+				.then((owner) => {
+					senderAddress = owner
+				})
+				.catch((error) => {
+					console.error("Error retrieving owner:", error)
+				})
 		}
-		else{
-			
-		}
-
 		const receiverAddress = req.user.wallet
 
 		const ticketId = parseInt(tokenId)

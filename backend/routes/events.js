@@ -65,7 +65,7 @@ router.post("/create", upload.single("image"), async (req, res) => {
 			if (!tickets[adminWallet]) {
 				tickets[adminWallet] = []
 			}
-			tickets[adminWallet].push(String(tokenId))
+			tickets[adminWallet].push(tokenId)
 		}
 
 		// Update the event with the tickets
