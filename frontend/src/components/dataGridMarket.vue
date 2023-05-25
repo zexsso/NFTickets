@@ -1,9 +1,6 @@
 <template lang="">
 	<ScrollPanel style="width: 100%; height: 93vh">
 		<DataView :value="products" :layout="'grid'" :sortOrder="sortOrder" :sortField="sortField">
-			<template #header>
-				<Dropdown v-model="sortKey" :options="sortOptions" optionLabel="label" placeholder="Sort By tickets" @change="onSortChange($event)" />
-			</template>
 
 			<template #grid="slotProps">
 				<div class="col-12 sm:col-6 xl:col-4 p-4">
@@ -45,12 +42,10 @@
 			<div class="flex justify-between">
 				<p class="mb-4"><strong>Date :</strong> {{ formatDate(selectedObject.date) }}</p>
 				<p class="mb-4"><strong>Address :</strong> {{ selectedObject.address }}</p>
+				<p class="mb-4"><strong>Country :</strong> {{ selectedObject.country }}</p>
 			</div>
 			<div class="flex justify-between">
-				<p class="mb-4"><strong>Country :</strong> {{ selectedObject.country }}</p>
 				<p class="mb-4"><strong>City :</strong> {{ selectedObject.city }}</p>
-			</div>
-			<div class="flex justify-between items-center">
 				<p><strong>Tickets Available :</strong> {{ selectedObject.total_tickets }}</p>
 				<p class="text-green-500 font-bold"><strong class="text-white font-normal">Price :</strong> {{ selectedObject.price }} $</p>
 			</div>

@@ -1,9 +1,10 @@
 const express = require("express")
 const router = express.Router()
 const User = require("../models/userModel")
+const Event = require("../models/eventModel")
 const Web3 = require("web3") // You need to install this package. Node.js does not have fetch built-in.
 const web3 = new Web3("http://127.0.0.1:7545")
-const checkAuth = require('../middlewares/checkAuth');
+const checkAuth = require("../middlewares/checkAuth")
 
 router.get("/get_balance", checkAuth, async (req, res) => {
 	try {
@@ -22,7 +23,7 @@ router.get("/get_balance", checkAuth, async (req, res) => {
 		const balanceInEther = web3.utils.fromWei(balance, "ether")
 
 		// Get the current Ether to USD price from CoinGecko
-		const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd')
+		const response = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd")
 		const data = await response.json()
 		const etherToUSD = data.ethereum.usd
 
@@ -36,5 +37,38 @@ router.get("/get_balance", checkAuth, async (req, res) => {
 		res.status(500).json({ message: "Error getting user balance" })
 	}
 })
+
+router.get("/get_tickets", checkAuth, async (req, res) => {
+	try {
+		// Get user by ID
+		const user = await User.findById(req.user.id).populate({
+			path: 'tickets.eventId',
+			model: 'Event'
+		})
+
+		// Check if user exists
+		if (!user) {
+			return res.status(400).json({ message: "User not found" })
+		}
+
+		// Get user tickets and filter the data
+		const tickets = user.tickets.map(ticket => ({
+			eventId: ticket.eventId._id,
+			eventName: ticket.eventId.name,
+			eventDate: ticket.eventId.date,
+			ticketId: ticket.ticketId,
+			purchasePrice: ticket.price,
+			image: ticket.eventId.image
+		}))
+
+		// Send response
+		res.status(200).json(tickets)
+	} catch (error) {
+		console.error(error)
+		res.status(500).json({ message: "Error getting user tickets" })
+	}
+})
+
+
 
 module.exports = router

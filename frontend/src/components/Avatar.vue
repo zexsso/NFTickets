@@ -1,15 +1,6 @@
 <template>
 	<div class="flex justify-content-center">
-		<Avatar
-			class="cursor-pointer"
-			label="P"
-			@click="toggle"
-			aria-haspopup="true"
-			aria-controls="overlay_menu"
-			shape="circle"
-			style="background-color: #2196f3"
-			size="large"
-		/>
+		<Avatar :image="`http://localhost:3000/${store.userImage.replace(/\\/g, '/')}`" @click="toggle" class="mr-2 cursor-pointer" size="large" shape="circle" />
 		<Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
 		<Toast />
 	</div>
@@ -18,9 +9,12 @@
 <script setup>
 	import { ref } from "vue"
 	import { useRouter } from "vue-router"
+	import { userStore } from "../stores/userStore"
+
+	// import Pinia Store
+	const store = userStore()
 
 	const router = useRouter()
-
 	const menu = ref()
 	const items = ref([
 		{

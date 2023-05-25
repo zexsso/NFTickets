@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-	import { ref, onBeforeMount, defineProps } from "vue"
+	import { ref, onBeforeMount } from "vue"
 	import { useConfirm } from "primevue/useconfirm"
 	import { useToast } from "primevue/usetoast"
 

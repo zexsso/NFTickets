@@ -1,9 +1,6 @@
 <template lang="">
 	<ScrollPanel style="width: 100%; height: 93vh">
-		<DataView :value="products" :layout="'grid'" :sortOrder="sortOrder" :sortField="sortField">
-			<template #header>
-				<Dropdown v-model="sortKey" :options="sortOptions" optionLabel="label" placeholder="Sort By tickets" @change="onSortChange($event)" />
-			</template>
+		<DataView :value="products" :layout="'grid'" :sortOrder="sortOrder" :sortField="sortField">>
 
 			<template #grid="slotProps">
 				<div class="col-12 sm:col-6 xl:col-4 p-4">

@@ -1,5 +1,7 @@
 const express = require("express")
 const multer = require("multer")
+const fs = require("fs")
+const path = require("path")
 const router = express.Router()
 const Event = require("../models/eventModel")
 
@@ -28,10 +30,22 @@ router.post("/create", upload.single("image"), async (req, res) => {
 	try {
 		const { name, date, address, place, city, country, price, tickets: ticketCount } = req.body
 		const tickets = {}
-		const image = req.file.path
 		const total_tickets = ticketCount
-		const event = new Event({ name, date, address, place, city, country, price, tickets, total_tickets, image })
+
+		// don't include the image field yet
+		const event = new Event({ name, date, address, place, city, country, price, tickets, total_tickets })
 		const savedEvent = await event.save()
+
+		// Now that we have the event ID, rename the file
+		const oldPath = req.file.path
+		const newPath = path.join(path.dirname(oldPath), savedEvent._id.toString() + path.extname(oldPath))
+
+		// Rename the file
+		fs.renameSync(oldPath, newPath)
+
+		// Update the image field in the database
+		savedEvent.image = newPath
+		await savedEvent.save()
 
 		for (let i = 0; i < ticketCount; i++) {
 			const concertId = savedEvent._id.toString()
@@ -62,7 +76,7 @@ router.post("/create", upload.single("image"), async (req, res) => {
 	} catch (err) {
 		console.error(err)
 		res.status(500).json({ message: "Server error during event creation", success: false })
- 	}
+	}
 })
 
 router.get("/:id", async (req, res) => {

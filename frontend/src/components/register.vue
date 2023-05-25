@@ -1,22 +1,39 @@
 <template lang="">
-	<div class="flex flex-row justify-center mt-12">
+	<div class="flex flex-row justify-center mt-4">
 		<form @submit.prevent="register" class="flex flex-col px-4 space-y-8">
-			<span class="p-float-label">
-				<InputText v-model="user" inputId="user" />
-				<label for="user">Username</label>
-			</span>
-			<span class="p-float-label">
-				<InputText v-model="email" inputId="email" />
-				<label for="email">Email</label>
-			</span>
-			<span class="p-float-label">
-				<Password v-model="password" inputId="password" />
-				<label for="password">Password</label>
-			</span>
-
-			<div class="flex space-x-2">
-				<InputSwitch v-model="is_creator" />
-				<p>Event Creator</p>
+			<div class="flex justify-between space-x-2">
+				<span class="p-float-label">
+					<InputText v-model="userInputs.user" inputId="user" />
+					<label for="user">Username</label>
+				</span>
+				<span class="p-float-label">
+					<InputText v-model="userInputs.email" inputId="email" />
+					<label for="email">Email</label>
+				</span>
+			</div>
+			<div class="flex justify-around">
+				<span class="p-float-label">
+					<Password v-model="userInputs.password" inputId="password" />
+					<label for="password">Password</label>
+				</span>
+			</div>
+			<div class="flex justify-around items-center">
+				<div class="flex space-x-2">
+					<InputSwitch v-model="userInputs.is_creator" />
+					<p>Event Creator</p>
+				</div>
+				<FileUpload
+					mode="basic"
+					accept="image/*"
+					customUpload
+					@uploader="img_upload"
+					:auto="true"
+					:maxFileSize="1000000"
+					:pt="{
+						basicButton: { class: 'bg-indigo-600 border-indigo-600 text-white' },
+					}"
+				>
+				</FileUpload>
 			</div>
 
 			<Divider />
@@ -32,23 +49,26 @@
 
 	const toast = useToast()
 
-	const user = ref(null)
-	const password = ref(null)
-	const email = ref(null)
-	const is_creator = ref(false)
+	const userInputs = ref({
+		user: "",
+		password: "",
+		email: "",
+		is_creator: false,
+		image: null,
+	})
 
 	const register = () => {
+		let formData = new FormData()
+		formData.append("username", userInputs.value.user)
+		formData.append("password", userInputs.value.password)
+		formData.append("email", userInputs.value.email)
+		formData.append("is_creator", userInputs.value.is_creator)
+		formData.append("image", userInputs.value.image)
+
 		fetch("http://localhost:3000/auth/register", {
 			method: "POST",
 			credentials: "include",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				username: user.value,
-				password: password.value,
-				is_creator: is_creator.value,
-			}),
+			body: formData,
 		})
 			.then((response) => {
 				return response.json()
@@ -64,5 +84,9 @@
 				// handle error
 				console.error("There was a problem with the register:", error)
 			})
+	}
+
+	const img_upload = (event) => {
+		userInputs.value.image = event.files[0]
 	}
 </script>

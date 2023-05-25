@@ -41,6 +41,10 @@
 <script setup>
 	import { ref, onMounted } from "vue"
 	import AvatarVue from "./Avatar.vue"
+	import { userStore } from "../stores/userStore"
+
+	// import Pinia Store
+	const store = userStore()
 
 	const balanceUSD = ref(0)
 	const balanceETH = ref(0)
