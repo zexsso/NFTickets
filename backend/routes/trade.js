@@ -19,8 +19,8 @@ router.post("/", checkAuth, async (req, res) => {
 	try {
 		const { tokenId, eventId, price } = req.body
 		let senderAddress
-		
-		if (tokenId == null) {
+		if (tokenId === "null") {
+			console.log(ici)
 			senderAddress = adminWallet
 		} else {
 			await contract.methods

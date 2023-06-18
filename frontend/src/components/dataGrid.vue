@@ -102,40 +102,35 @@
 		visibleDescript.value = true
 	}
 
-	function buyTicket(data) {
-		async function buyTicket(data) {
-			const senderAddress = "TODO" // Replace with actual sender address
-			const receiverAddress = "TODO" // Replace with actual receiver address
-			const tokenId = "TODO" // Replace with actual token id
-			const eventId = data.id // Assumed from the data object
-			const price = data.price // Assumed from the data object
+	async function buyTicket(data) {
+		const tokenId = "null" // Replace with actual token id
+		const eventId = data._id // Assumed from the data object
+		const price = data.price // Assumed from the data object
 
-			const bodyData = {
-				senderAddress: senderAddress,
-				receiverAddress: receiverAddress,
-				tokenId: tokenId,
-				eventId: eventId,
-				price: price,
+		const bodyData = {
+			tokenId: tokenId,
+			eventId: eventId,
+			price: price,
+		}
+
+		try {
+			const response = await fetch("http://localhost:3000/trade", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				credentials: "include",
+				body: JSON.stringify(bodyData),
+			})
+
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`)
 			}
 
-			try {
-				const response = await fetch("http://localhost:3000/yourApiEndpoint", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify(bodyData),
-				})
-
-				if (!response.ok) {
-					throw new Error(`HTTP error! status: ${response.status}`)
-				}
-
-				const json = await response.json()
-				console.log(json) // Log the response for now
-			} catch (error) {
-				console.error("Fetch failed: ", error)
-			}
+			const json = await response.json()
+			console.log(json) // Log the response for now
+		} catch (error) {
+			console.error("Fetch failed: ", error)
 		}
 	}
 

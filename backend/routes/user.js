@@ -15,7 +15,6 @@ router.get("/get_balance", checkAuth, async (req, res) => {
 		if (!user) {
 			return res.status(400).json({ message: "User not found" })
 		}
-
 		// Get user balance
 		const balance = await web3.eth.getBalance(user.walletAddress)
 
@@ -53,12 +52,12 @@ router.get("/get_tickets", checkAuth, async (req, res) => {
 
 		// Get user tickets and filter the data
 		const tickets = user.tickets.map(ticket => ({
-			eventId: ticket.eventId._id,
-			eventName: ticket.eventId.name,
-			eventDate: ticket.eventId.date,
+			eventId: ticket.eventId,
+			eventName: ticket.name,
+			eventDate: ticket.date,
 			ticketId: ticket.ticketId,
 			purchasePrice: ticket.price,
-			image: ticket.eventId.image
+			image: ticket.image
 		}))
 
 		// Send response

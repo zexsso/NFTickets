@@ -6,7 +6,7 @@
 					<div class="cursor-default transition ease-in-out delay-150 bg-none hover:-translate-y-1 hover:scale-105 duration-300 text-white border-none rounded-md p-3">
 						<div
 							class="transition ease-in-out delay-150 p-2 border-1 surface-border surface-card rounded-xl"
-							:style="`background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('http://localhost:3000/${slotProps.data.image.replace(/\\/g, '/')}');
+							:style="`background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('http://localhost:3000/');
            						background-size: cover;
            						background-position: center;`"
 						>
@@ -74,6 +74,7 @@
 		} catch (error) {
 			console.error("Fetch failed: ", error)
 		}
+		console.log(slotProps.data)
 	})
 
 	const products = ref()
